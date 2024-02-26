@@ -1,0 +1,115 @@
+<style>
+
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{Title}}</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <div class="col-md-12 ">
+            <div class="row">
+                    <div class="col-md-6"> <label>Danh sách sản phẩm</label> <span style="font-size:13px;"> (click vào + để
+                            thêm vào lưới) </span></div>
+                    <div class="col-md-6">
+                            <p-dropdown [options]="danhsachsanphams" [(ngModel)]="selectedSanPham" name="danhsachsanpham" optionLabel="TenSanPham"
+                            [style]="{'width':'240px'}" [filter]="true">
+                        </p-dropdown>
+                            <button pButton type="button" (click)="ThemSanPham();" class="p-button-raised p-button-rounded"
+                        icon="pi pi-plus" style="margin-left: 20px;"></button>
+                    </div>
+            </div>
+            <div class="row ">
+                <div class="form-group col-md-4">
+                  <label class="col-sm-12 col-form-label text-label">Mã voucher<span class="required">(*)</span></label>
+                  <div class="col-sm-12">
+                    <input [(ngModel)]="MaVoucher" name="mavoucher" class="form-control" placeholder="nhập mã voucher" type="text" maxlength="30">
+                  </div>
+                </div>
+                <div class="form-group col-md-2">
+                  <div class="col-sm-12">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="KiemTraMaVoucher()" style="margin-top:33px;">Kiểm tra</button>
+
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="col-sm-12 col-form-label text-label">Giá trị voucher : </label>
+                  <div class="col-sm-12">
+                    {{GiaTriVoucherMoTa}}
+                  </div>
+                </div>
+
+            </div>
+            <div class="row col-md-12">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="hinhthucthanhtoan">Hình thức thanh toán</label>
+                  <select class="form-control" id="hinhthucthanhtoan" name="hinhthucthanhtoan" [(ngModel)]="HinhThucThanhToan">
+                    <option value="1">Tiền mặt</option>
+                    <option value="2">Chuyển khoản</option>
+                    <option value="3">Quẹt thẻ</option>
+                    <option value="4">Quẹt thẻ trả góp</option>
+
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group" style="margin-left: 20px;">
+                  <label for="hinhthucthanhtoan">Ngày thanh toán <span style="color:red;">(*) </span></label>
+                  <p-calendar [(ngModel)]="NgayThanhToan" name='tungaybc22222' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+                </div>
+
+              </div>
+
+            </div>
+
+            <br><br>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Giá sản phẩm</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Thành tiền</th>
+                        <td scope="col"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of sanphams; let index = index">
+                        <th scope="row">{{index+1}}</th>
+                        <td>{{item.TenSanPham}}</td>
+                        <!-- <td>{{item.GiaSanPham}}</td> -->
+                        <td><input type="text" style="text-align:right;width: 100%;" name="name2{{index}}"  [(ngModel)]="GiaSanPham[index].value" (keypress)=onPressGiaSanPham($event)  (keyup)="ChangeGiaSanPham(index)"> </td>
+
+                        <td><input type="text" style="text-align:right;width: 100%;" name="name{{index}}"  [(ngModel)]="SoLuong[index].value" (keypress)=onPressSoLuong($event)  (keyup)="ChangeSoLuong(index)"> </td>
+                        <td>{{item.ThanhTien}}</td>
+                        <td><button type="button" (click)="XoaSanPham(index);"  class="btn btn-sm btn-primary active xoamonan"> Xóa</button></td>
+                    </tr>
+                    <tr>
+                            <th scope="row">Tổng tiền sản phẩm</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{TongCong}}</td>
+                            <td></td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Số tiền phải thanh toán</th>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>{{SoTienThanhToan}}</td>
+                      <td></td>
+              </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button pButton type="button" (click)="saveData();" label="Ghi lại" class="p-button-raised p-button-rounded"
+        icon="pi pi-plus"></button>
+    <button pButton class="p-button-raised p-button-rounded" label="Hủy bỏ" (click)="activeModal.close()"></button>
+</div>

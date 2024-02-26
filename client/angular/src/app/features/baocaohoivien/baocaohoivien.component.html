@@ -1,0 +1,223 @@
+<style>
+
+</style>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Báo cáo hội viên</h4>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng đang bảo lưu
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCao_DanhSachKhachHangDangBaoLuu()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng bảo lưu trong khoảng thời gian
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgayBaoLuu" name='tungaybaoluu' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgayBaoLuu" name='denngaybaoluu' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCao_DanhSachKhachHangDangBaoLuu_TuNgay_DenNgay()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng ngưng tập
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCao_DanhSachKhachHangHuy()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng ngưng tập trong khoảng thời gian
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgayNgungTap" name='tungayngungtap' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgayNgungTap" name='denngayngungtap' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCao_DanhSachKhachHangHuy_KhoangTIME()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div>
+
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng hết hạn
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCao_DanhSachKhachHangHetHan()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách các hội viên sắp hết hạn trong khoảng thời gian
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgayHetHan" name='TuNgayHetHan' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgayHetHan" name='DenNgayHetHan' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCao_DanhSachHoiVienSapHetHan_KhoangTime()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div>
+
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng chuyển phòng tập trong khoảng thời gian
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgayChuyen" name='tungaychuyen' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgayChuyen" name='denngaychuyen' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCao_DanhSachKhachHangChuyenCLB_KhoangTIME()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div>
+
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng thuê tủ đồ còn hạn
+    <hr>
+    <button class="btn btn-info active" (click)="DanhSachThueTuDo()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng thuê tủ đồ trong khoảng thời gian
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgayThueTu" name='tungaythuetu' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgayThueTu" name='denngaythuetu' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCaoDanhSachThueTuDo_TheoKhoangTime()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div>
+
+
+
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách các hội viên có ngày sinh trong khoảng thời gian
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgaySinh" name='TuNgaySinh' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgaySinh" name='DenNgaySinh' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCao_DanhSachHoiVienCoSinhNhat_KhoangTIME()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div>
+
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách voucher đã sử dụng trong khoảng thời gian
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgaySuDung" name='TuNgaySuDung' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgaySuDung" name='DenNgaySuDung' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="DanhSachVoucher_DaSuDung_KhoangTime()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo Nợ chưa thanh toán của hội viên trong khoảng thời gian
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgayHenTra" name='tungaythuetu' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgayHenTra" name='denngaythuetu' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCaoDanhSachHoiVien_HenTra()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng trễ hẹn trả nợ
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCaoKhachHangTreHenTraNo_GoiTap()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+
+  <div class="alert alert-primary" role="alert">
+    Báo cáo khách hàng chưa và đã là hội viên
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCaoKhachHangChuaVaCoGoiTap()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng hàng tiềm năng
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCaoKhachHangTiemNang()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+
+
+<!-- <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng có lịch cân đo
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCaoHoiVienCoLichCanDo()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng trễ hẹn cân đo
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCaoHoiVienTreHenCanDo()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo biến động cân nặng
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCaoBienDongCanNang()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+
+
+  <div class="alert alert-primary" role="alert">
+    Báo cáo biến động các chỉ số cân đo
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgayCanDo" name='tungaybc1' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgayCanDo" name='denngaybc1' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCaoBienDongCacChiSo()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div> -->

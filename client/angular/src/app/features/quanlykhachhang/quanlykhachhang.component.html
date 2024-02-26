@@ -1,0 +1,182 @@
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Quản lý hội viên</h4>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+        <!-- <button pButton type="button" (click)="btnThemMoi({Id:0})" label="Thêm mới" class="p-button-raised p-button-rounded" icon="pi pi-plus"></button> -->
+        <button pButton type="button" (click)="btnImport({Id:0})" label="Import" class="p-button-raised p-button-rounded" icon="pi pi-plus"></button>
+    </ng-template>
+</p-toolbar>
+<p-toolbar styleClass="p-mb-4">
+    <div class="col-md-12 row">
+        <div class="col-sm-2">
+            <p-dropdown [options]="caulacbos" [(ngModel)]="selectedCauLacBo"  optionLabel="CauLacBo" [filter]="true" [style]="{'width':'100%', 'height':'40px'}"
+                filterBy="CauLacBo"></p-dropdown>
+
+        </div>
+        <div class="col-sm-2">
+            <p-dropdown [options]="goitaps" [(ngModel)]="selectedGoiTap"  optionLabel="TenCauHinh" [filter]="true" [style]="{'width':'100%', 'height':'40px'}"
+                filterBy="TenCauHinh"></p-dropdown>
+
+        </div>
+        <div class="col-sm-2">
+            <select class="form-control" id="tinhtrangtap" name="tinhtrangtap"
+                          [(ngModel)]="TinhTrangTap">
+                          <option value="-1">Tất cả tình trạng tập</option>
+                          <option value="0">Ngừng tập</option>
+                          <option value="1">Đang tập</option>
+                          <option value="2">Bảo lưu</option>
+                          <option value="3">Đã chuyển</option>
+                        </select>
+        </div>
+        <div class="col-sm-2">
+            <select class="form-control" id="tinhtrang" name="tinhtrang"
+            [(ngModel)]="TinhTrang">
+            <option value="-1">Tất cả tình trạng</option>
+            <option value="0">Hết hạn</option>
+            <option value="1">Còn hạn</option>
+          </select>
+
+        </div>
+        <button class="btn btn-info" (click)="TimKiem()">Tìm kiếm <span class="pi pi-search-plus"></span></button>
+        <button class="btn btn-info active" (click)="BaoCaoKhachHangHetHan()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+</p-toolbar>
+<p-table #dt [value]="khachhangs" [showCurrentPageReport]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-gridlines table table-bordered" [rows]="10"   [paginator]="true"  [responsive]="true"  [rowHover]="true">
+    <!-- <ng-template pTemplate="caption">
+
+        <div class="table-header">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Nhập họ tên tìm kiếm" />
+            </span>
+        </div>
+    </ng-template> -->
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:4%;">STT</th>
+            <th style="width:13%;">Họ và tên</th>
+            <th style="width:13%;">Số điện thoại</th>
+            <!-- <th style="width:13%;">Email</th> -->
+            <th style="width:13%;">Số thẻ</th>
+            <th style="width:13%;">Ảnh đại diện</th>
+            <th>Câu lạc bộ</th>
+            <th>Gói tập</th>
+            <th>Hợp đồng</th>
+            <th>Tình Trạng</th>
+            <th>Chức năng</th>
+        </tr>
+        <tr>
+            <th>
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'HoVaTen', 'contains')"
+                    placeholder="Họ tên" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'SoDienThoai', 'contains')"
+                    placeholder="SDT" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <!-- <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'Email', 'startsWith')"
+                    placeholder="" class="p-column-filter txtfiler p-inputtext-sm">
+            </th> -->
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'SoThe', 'contains')"
+                    placeholder="" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'NhuCauTapLuyen', 'startsWith')"
+                    placeholder="" class="p-column-filter txtfiler p-inputtext-sm"> -->
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'CauLacBo', 'contains')"
+                    placeholder="" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'TenGoiTap', 'contains')"
+                    placeholder="" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <p-dropdown [options]="statuses1" (onChange)="dt.filter($event.value, 'NgayConLai', 'equals')"
+                    styleClass="p-column-filter txtfiler p-inputtext-sm" placeholder="status" [showClear]="true">
+                    <ng-template let-option pTemplate="item">
+                        <span *ngIf="option.value==1" class="tinhtrang-hoatdong">{{option.label}}</span>
+                        <span *ngIf="option.value==0" class="tinhtrang-khonghoatdong">{{option.label}}</span>
+                    </ng-template>
+                </p-dropdown>
+            </th>
+            <th>
+                <p-dropdown [options]="statuses" (onChange)="dt.filter($event.value, 'TinhTrangView', 'equals')"
+                    styleClass="p-column-filter txtfiler p-inputtext-sm" placeholder="status" [showClear]="true">
+                    <ng-template let-option pTemplate="item">
+                        <span *ngIf="option.value==0" class="tinhtrang-khonghoatdong">{{option.label}}</span>
+                        <span *ngIf="option.value==1" class="tinhtrang-hoatdong">{{option.label}}</span>
+                        <span *ngIf="option.value==2" class="tinhtrang-khonghoatdong">{{option.label}}</span>
+                        <span *ngIf="option.value==3" class="tinhtrang-khonghoatdong">{{option.label}}</span>
+                    </ng-template>
+                </p-dropdown>
+            </th>
+            <th>
+            </th>
+
+
+        </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-khachhang>
+        <tr>
+            <td>{{khachhang.STT}}</td>
+            <td>{{khachhang.HoVaTen}}</td>
+            <td>{{khachhang.SoDienThoai}}</td>
+            <!-- <td>{{khachhang.Email}}</td> -->
+            <td>{{khachhang.SoThe}}</td>
+            <td>
+                <img  src="{{khachhang.AnhDaiDien}}" width="120"
+                 style="vertical-align: middle" class="img-thumbnail" />
+            </td>
+            <td>{{khachhang.CauLacBo}}</td>
+            <td>{{khachhang.TenGoiTap}}</td>
+            <td *ngIf="khachhang.NgayConLai==1"><span [class]="'tinhtrang-hoatdong'">Còn hạn</span></td>
+            <td *ngIf="khachhang.NgayConLai==0"><span [class]="'tinhtrang-khonghoatdong'">Hết hạn</span></td>
+            <!-- <td>
+                <img  src="{{khachhang.AnhBia}}" width="120"
+                 style="vertical-align: middle" class="img-thumbnail" />
+            </td> -->
+            <td *ngIf="khachhang.TinhTrangView==0"><span [class]="'tinhtrang-khonghoatdong'">Ngừng tập</span></td>
+            <td *ngIf="khachhang.TinhTrangView==1"><span [class]="'tinhtrang-hoatdong'">Đang tập</span></td>
+            <td *ngIf="khachhang.TinhTrangView==2"><span [class]="'tinhtrang-khonghoatdong'">Bảo lưu</span></td>
+            <td *ngIf="khachhang.TinhTrangView==3"><span [class]="'tinhtrang-khonghoatdong'">Đã chuyển</span></td>
+            <td *ngIf="khachhang.Quyen == 'ADMIN' ">
+                <button *ngIf="khachhang.NgungHuy == 0" pButton pRipple type="button" (click)="btnThemMoi(khachhang)" class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-pencil" data-toggle="tooltip" data-placement="right" title="Thêm mới"></button>
+                <button *ngIf="khachhang.NgungHuy == 0" pButton pRipple type="button" (click)="changepass(khachhang)"  icon="pi pi-key" class="p-mr-2 p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="Đổi mật khẩu"></button>
+                <button *ngIf="khachhang.TinhTrangView==1 && khachhang.NgayConLai==1 && khachhang.NgungHuy ==0" pButton type="button" (click)="delete(khachhang)"  icon="pi pi-lock" class="p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="Ngừng tập"></button>
+                <button *ngIf="khachhang.NgungHuy == 0" pButton type="button" (click)="themtudo(khachhang)"  icon="pi pi-plus" class="p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="Thêm tủ đồ, bảo lưu, chuyển phòng"></button>
+                <button *ngIf="khachhang.NgungHuy != 0" pButton type="button" (click)="InXacNhan(khachhang)"  icon="pi pi-print" class="p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="In xác nhận"></button>
+            </td>
+            <td *ngIf="khachhang.Quyen != 'ADMIN' ">
+                <button *ngIf="khachhang.NgungHuy == 0" pButton pRipple type="button" (click)="btnThemMoi(khachhang)" class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-pencil" data-toggle="tooltip" data-placement="right" title="Thêm mới"></button>
+                <button *ngIf="khachhang.NgungHuy == 0 && khachhang.TinhTrangView!=3" pButton pRipple type="button" (click)="changepass(khachhang)"  icon="pi pi-key" class="p-mr-2 p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="Đổi mật khẩu"></button>
+                <button *ngIf="khachhang.TinhTrangView==1 && khachhang.NgayConLai==1 && khachhang.NgungHuy ==0" pButton type="button" (click)="delete(khachhang)"  icon="pi pi-lock" class="p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="Ngừng tập"></button>
+                <!-- <button pButton pRipple type="button" (click)="changepass(khachhang)"  icon="pi pi-key" class="p-mr-2 p-button-raised p-button-rounded"></button> -->
+                <button *ngIf="khachhang.NgungHuy == 0 && khachhang.TinhTrangView!=3" pButton type="button" (click)="themtudo(khachhang)"  icon="pi pi-plus" class="p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="Thêm tủ đồ, bảo lưu, chuyển phòng"></button>
+
+                <button *ngIf="khachhang.NgungHuy != 0" pButton type="button" (click)="InXacNhan(khachhang)"  icon="pi pi-print" class="p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="In xác nhận"></button>
+                <!-- <button pButton pRipple type="button" (click)="btnThemMoi(khachhang)" class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-pencil"></button>
+                <button pButton pRipple type="button" (click)="changepass(khachhang)"  icon="pi pi-key" class="p-mr-2 p-button-raised p-button-rounded"></button>
+                <button pButton type="button" (click)="delete(khachhang)"  icon="pi pi-trash" class="p-button-raised p-button-rounded"></button> -->
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

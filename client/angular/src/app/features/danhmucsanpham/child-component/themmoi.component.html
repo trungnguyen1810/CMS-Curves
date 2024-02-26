@@ -1,0 +1,117 @@
+<style>
+    .required {
+        color: red;
+    }
+
+    .btn_upload {
+        cursor: pointer;
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+        color: #fff;
+        background-color: #2a72d4;
+        border: 1px solid #166b8a;
+        padding: 5px 10px;
+    }
+
+    .btn_upload:hover,
+    .btn_upload:focus {
+        background-color: #7ca9e6;
+    }
+
+    .yes {
+        display: flex;
+        align-items: flex-start;
+        margin-top: 10px !important;
+    }
+
+    .btn_upload input {
+        cursor: pointer;
+        height: 100%;
+        position: absolute;
+        filter: alpha(opacity=1);
+        -moz-opacity: 0;
+        opacity: 0;
+    }
+
+    .it {
+        height: 100px;
+        margin-left: 10px;
+    }
+
+    .btn-rmv1,
+    .btn-rmv2,
+    .btn-rmv3,
+    .btn-rmv4,
+    .btn-rmv5 {
+        display: none;
+    }
+
+    .rmv {
+        cursor: pointer;
+        color: #fff;
+        border-radius: 30px;
+        border: 1px solid #fff;
+        display: inline-block;
+        background: rgba(255, 0, 0, 1);
+        margin: -5px -10px;
+    }
+
+    .rmv:hover {
+        background: rgba(255, 0, 0, 0.5);
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{data.title}}</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <div class="col-md-12 row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Tên danh mục <span
+                            class="required">(*)</span></label>
+                    <div class="col-sm-7" >
+                        <input type="text" class="p-inputtext-sm" pInputText maxlength="100" [(ngModel)]="TenDanhMuc"
+                            name="tendanhmucsanpham">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label text-label">Hoạt động </label>
+                    <div class="col-sm-6" style="margin-left: -29px;">
+                        <input type="checkbox" [(ngModel)]="isChecked"  (change)="CheckTinhTrang($event);" [checked]="isChecked == true" name="tinhtrang">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Ảnh đại diện<span
+                            class="required">(*)</span></label>
+                    <div class="colss-9">
+                        <div class="yes">
+                            <span class="btn_upload">
+                                <input type="file" id="imag" title="" (change)="readURL($event);" class="input-img"
+                                    accept=".png, .jpg, .jpeg" />
+                                Chọn
+                            </span>
+                            <img id="ImgPreview" *ngIf="showImg" style="border-radius: 10px;
+                          border-style: solid;
+                          border-color: #42afaa;                     
+                          margin-left: 20px;" [src]="imageSrc" class="preview1" height="100" width="120" />
+                            <!-- <input type="button" id="removeImage1" value="x" class="btn-rmv1 rmv"
+                                (click)="removeImg($event)" /> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button pButton type="button" (click)="saveData();" label="Ghi lại" class="p-button-raised p-button-rounded"
+        icon="pi pi-plus"></button>
+    <button pButton class="p-button-raised p-button-rounded" label="Hủy bỏ" (click)="activeModal.close()"></button>
+</div>

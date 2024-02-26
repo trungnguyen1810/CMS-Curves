@@ -1,0 +1,280 @@
+<style>
+  .btn_upload {
+    cursor: pointer;
+    display: inline-block;
+    /* overflow: hidden; */
+    position: relative;
+    color: #fff;
+    background-color: #2a72d4;
+    border: 1px solid #166b8a;
+    padding: 5px 10px;
+  }
+
+  .btn_upload:hover,
+  .btn_upload:focus {
+    background-color: #7ca9e6;
+  }
+
+  .yes {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px !important;
+  }
+
+  .btn_upload input {
+    cursor: pointer;
+    height: 100%;
+    position: absolute;
+    filter: alpha(opacity=1);
+    -moz-opacity: 0;
+    opacity: 0;
+  }
+
+  .it {
+    height: 100px;
+    margin-left: 10px;
+  }
+
+  .btn-rmv1,
+  .btn-rmv2,
+  .btn-rmv3,
+  .btn-rmv4,
+  .btn-rmv5 {
+    display: none;
+  }
+
+  .rmv {
+    cursor: pointer;
+    color: #fff;
+    border-radius: 30px;
+    border: 1px solid #fff;
+    display: inline-block;
+    background: rgba(255, 0, 0, 1);
+    margin: -5px -10px;
+  }
+
+  .rmv:hover {
+    background: rgba(255, 0, 0, 0.5);
+  }
+
+  .header{
+  display: none !important;
+}
+
+  
+</style>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+<div class="modal-header">
+ 
+  <h5 class="modal-title">{{Title}}</h5>
+  <!-- <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span> -->
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div class="panelCollapse">
+        <div>
+          <p-panel header="Thông tin chung" [toggleable]="true">
+            <ng-template pTemplate="icons">
+              <!-- <button pButton class="p-panel-header-icon p-link" icon="pi pi-cog" (click)="menu.toggle($event)">
+              </button> -->
+              <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>
+            </ng-template>
+            <div class="collapse show">
+              <div class="row">
+                <!--Cột trái-->
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group" [hidden]="password">
+                    <label class="label-text">Mã câu lạc bộ <span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" [disabled] = "true" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="MaCauLacBo"
+                       />
+                  </div>     
+                  <div class="form-group">
+                    <label class="label-text">Tên câu lạc bộ<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                      [(ngModel)]="TenCLB" />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="label-text">SoDienThoai<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                    [(ngModel)]="SoDienThoai" />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="label-text">Email <span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                    [(ngModel)]="Email" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Số điện thoại zalo<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                    [(ngModel)]="SoDienThoaiZalo" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Id messenger<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                    [(ngModel)]="Idmessenger" />
+                  </div>
+
+                </div>
+                <!-- cột phải-->
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label class="label-text">Tỉnh/thành <span style="color:red;margin-left:3px;">(*)</span></label>
+                    <p-dropdown [options]="cities" [(ngModel)]="selectedCity" optionLabel="TenDiaBan" [filter]="true" [style]="{'width':'100%', 'height':'34px'}"
+                      filterBy="TenDiaBan"></p-dropdown>
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">DiaChi<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                    [(ngModel)]="DiaChi" />
+                  </div>
+                  <div class="form-group">
+                    <div class="col-12 row">
+                      <div class="col-3">
+                        <label class="label-text">Hiển thị
+                        </label>
+                        <input type="checkbox" [(ngModel)]="HienThi" style="margin-left: 10px;" />
+                      </div>
+                      <div class="col-9">
+                        <div class="form-group">
+                          <label class="label-text">Ảnh đại diện <span style="color:red;margin-right:3px;">(*)</span>
+                          </label>
+                          <div class="col-9">
+                            <div class="yes">
+                              <span class="btn_upload">
+                                <input type="file" id="imag" title="" (change)="readURL($event);" class="input-img"
+                                  accept=".png, .jpg, .jpeg" />
+                                Chọn
+                              </span>
+                              <img id="ImgPreview" *ngIf="showImg" style="border-radius: 10px;
+                          border-style: solid;
+                          border-color: #42afaa;                     
+                          margin-left: 20px;" [src]="imageSrc" class="preview1" height="100" width="120" />
+                              <input type="button" id="removeImage1" value="x" class="btn-rmv1"
+                                (click)="removeImg($event)" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+              
+                </div>
+
+                <div class="col-xs-12 col-sm-12">
+                  <label class="label-text">Thời gian hoạt động<span style="color:red;margin-left:3px;">(*)</span>
+                  </label>
+
+                  <ckeditor [(ngModel)]="ThoiGianHoatDong" [readonly]="false" debounce="200">
+                  </ckeditor>
+
+                </div>
+
+              </div>
+            </div>
+          </p-panel>
+          <div class="nguoidung">
+          <p-panel header="Thông tin người dùng quản trị câu lạc bộ" [toggleable]="true" [show]="false" >
+            <ng-template pTemplate="icons">
+              <!-- <button pButton class="p-panel-header-icon p-link" icon="pi pi-cog" (click)="menu.toggle($event)">
+              </button> -->
+              <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>
+            </ng-template>
+            <div class="collapse show">
+              <div class="row">
+                <!--Cột trái-->
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label class="label-text">Họ và tên <span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                      [(ngModel)]="HoTen" />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="label-text">Điện thoại<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                    [(ngModel)]="DienThoai" />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="label-text">Email
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                    [(ngModel)]="EmailND" />
+                  </div>
+
+                </div>
+                <!-- cột phải-->
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label class="label-text">Tên đăng nhập<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                    [(ngModel)]="TenDangNhap" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Mật khẩu<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="password" style="height: 34px;" maxlength="100" class="form-control"
+                    [(ngModel)]="MatKhau" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Xác nhận mật khẩu<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="password" style="height: 34px;" maxlength="100" class="form-control"
+                    [(ngModel)]="XNMatKhau" />
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </p-panel>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary active" (click)="Save()">Ghi lại</button>
+  <button type="button" class="btn btn-primary active" (click)="activeModal.close()">Hủy bỏ</button>
+</div>

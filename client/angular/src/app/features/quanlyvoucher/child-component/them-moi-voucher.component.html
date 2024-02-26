@@ -1,0 +1,164 @@
+<style>
+  .btn_upload {
+    cursor: pointer;
+    display: inline-block;
+    /* overflow: hidden; */
+    position: relative;
+    color: #fff;
+    background-color: #2a72d4;
+    border: 1px solid #166b8a;
+    padding: 5px 10px;
+  }
+
+  .btn_upload:hover,
+  .btn_upload:focus {
+    background-color: #7ca9e6;
+  }
+
+  .yes {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px !important;
+  }
+
+  .btn_upload input {
+    cursor: pointer;
+    height: 100%;
+    position: absolute;
+    filter: alpha(opacity=1);
+    -moz-opacity: 0;
+    opacity: 0;
+  }
+
+  .it {
+    height: 100px;
+    margin-left: 10px;
+  }
+
+  .btn-rmv1,
+  .btn-rmv2,
+  .btn-rmv3,
+  .btn-rmv4,
+  .btn-rmv5 {
+    display: none;
+  }
+
+  .rmv {
+    cursor: pointer;
+    color: #fff;
+    border-radius: 30px;
+    border: 1px solid #fff;
+    display: inline-block;
+    background: rgba(255, 0, 0, 1);
+    margin: -5px -10px;
+  }
+
+  .rmv:hover {
+    background: rgba(255, 0, 0, 0.5);
+  }
+</style>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+<div class="modal-header">
+  <h5 class="modal-title">{{Title}}</h5>
+  <!-- <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span> -->
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div class="panelCollapse">
+        <div>
+          <div class="collapse show">
+            <div class="row">
+              <!--Cột trái-->
+              <div class="col-xs-12 col-sm-6">
+                <!-- <div class="form-group">
+                  <label class="label-text">Hiển thị
+                  </label>
+                  <input type="checkbox" [(ngModel)]="HienThi" style="margin-left: 10px;" />
+                </div> -->
+                <div class="form-group">
+                  <label class="label-text">Mã voucher <span style="color:red;margin-left:3px;">(*)</span>
+                  </label>
+                  <input type="text" #mauudai style="height: 34px;" maxlength="100" (keypress)="onPressMaUuDai($event)"
+                    class="form-control" [(ngModel)]="MaVoucher" [disabled]="!DMUD" />
+                </div>
+
+
+
+                <div class="form-group row">
+                  <label class="col-sm-6 col-form-label text-label">Sử dụng </label>
+                  <div class="col-sm-6" style="margin-left: -29px;">
+                    <input type="checkbox" [(ngModel)]="isChecked" (change)="CheckTinhTrang($event);"
+                      [checked]="isChecked == true" name="tinhtrang">
+
+                  </div>
+                </div>
+
+              </div>
+              <!-- cột phải-->
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label class="label-text" style='width: 100%;'>Ngày hết hạn ưu đãi<span style="color:red;margin-left:3px;">(*)</span>
+                  </label>
+                  <p-calendar [style]="{ height: '34px' }" [(ngModel)]="NgayHetHan" [locale]="en" maxlength="100"
+                    dateFormat="dd/mm/yy" [showIcon]="true" inputId="icon" showTime="true" hourFormat="24">
+                  </p-calendar>
+                </div>
+                <div class="form-group">
+                  <label class="label-text">Loại mã <span style="color:red;margin-left:3px;">(*)</span></label>
+                  <div class="form-control" style="border: none;">
+                    <p-radioButton name="tatca" (onClick)="TangNgayTap($event)" value="1" [(ngModel)]="LoaiMa"
+                      inputId="tatca"></p-radioButton>
+                    Tặng ngày tập
+                    <p-radioButton name="tangtien" (onClick)="TangTien($event)" value="3" [(ngModel)]="LoaiMa"
+                      inputId="tatca"></p-radioButton>
+                    Tặng tiền
+                    <p-radioButton name="luachon" (onClick)="TangSanPham($event)" value="2" [(ngModel)]="LoaiMa"
+                      inputId="luachon">
+                    </p-radioButton>
+                    Tặng sản phẩm
+                  </div>
+                  <div [hidden]="danhsach">
+                    <div class="col-xs-12 col-sm-8">
+                      <input type="number" style="height: 34px;" maxlength="100" class="form-control"
+                        [(ngModel)]="SoLuongNgay" placeholder="Số lượng ngày" /> 
+                    </div>
+                  </div>
+                  <div [hidden]="danhsach2">
+                    <div class="col-xs-12 col-sm-8">
+                      <input type="text" style="height: 34px;" maxlength="100" class="form-control"  (keyup)="formatMoney($event)" (keypress)="onPressTien($event)"
+                        [(ngModel)]="SoTien" placeholder="Số tiền tặng" /> 
+                    </div>
+                  </div>
+                  <div [hidden]="danhsach1">
+                    <div class="col-xs-12 col-sm-12">
+                    <div class="row">
+                      <!-- <div class="col-xs-12 col-sm-4"> -->
+                        <p-dropdown [options]="sanphams" [(ngModel)]="selectedSanPham" optionLabel="TenSanPham"
+                          [filter]="true" [style]="{'height':'34px'}">
+                        </p-dropdown>
+                      <!-- </div> -->
+                      <!-- <div class="col-xs-12 col-sm-8"> -->
+                        <input type="text" style="height: 34px; margin-top: 10px;" maxlength="100" class="form-control"
+                          [(ngModel)]="TenSanPham" placeholder="Tên sản phẩm"/>
+                      <!-- </div> -->
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary active" (click)="Save()">Ghi lại</button>
+  <button type="button" class="btn btn-primary active" (click)="activeModal.close()">Hủy bỏ</button>
+</div>

@@ -1,0 +1,40 @@
+
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Chi tiết thực đơn theo bữa trong ngày</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <span>Bạn đang xem thực đơn ngày: <span style="font-weight: 550">{{Ngay}} /  {{TenBua}} / Tổng calo : {{TongCalo}}</span></span>
+        <br><br>
+        <div class="col-md-12 row">
+            <table class="table table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên món ăn</th>                    
+                    <th scope="col">Đơn vị tính</th>
+                    <th scope="col">calo / đơn vị tính</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Tổng lượng calo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of monans; let index = index">
+                    <th scope="row">{{item.STT}}</th>
+                    <td>{{item.TenMonAn}}</td>                   
+                    <td>{{item.TenDonVi}}</td>
+                    <td>{{item.Calo}}</td>
+                    <td>{{item.SoLuong}}</td>
+                    <td>{{item.TongCalo}}</td>
+                  </tr>                 
+                </tbody>
+              </table>
+           
+        </div>
+    </form>
+</div>
+<div class="modal-footer">    
+    <button pButton class="p-button-raised p-button-rounded" label="Đóng" (click)="activeModal.close()"></button>
+</div>

@@ -1,0 +1,143 @@
+<style>
+  label {
+    color: chartreuse;
+    font-weight: 400;
+  }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Chi tiết lịch sử cân đo ({{NgayCanDo}})</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div class="panelCollapse">
+        <div>
+          <div class="collapse show">
+            <div class="row">
+              <!--Cột trái-->
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Họ và tên
+                  </label><br />
+                  <label class="label-text"><b>{{HoVaTen}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Cân nặng
+                  </label><br />
+                  <label class="label-text"><b>{{CanNang}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Chiều cao
+                  </label><br />
+                  <label class="label-text" maxlength="100" ><b>{{ChieuCao}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Lượng mỡ cơ thể
+                  </label><br />
+                  <label class="label-text"><b>{{LuongMoCoThe}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Mật độ cơ
+                  </label><br />
+                  <label class="label-text" maxlength="100" ><b>{{MatDoCo}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Mật độ xương
+                  </label><br />
+                  <label class="label-text" maxlength="100" ><b>{{MatDoXuong}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">BMI
+                  </label><br />
+                  <label class="label-text"><b>{{BMI}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">DCI
+                  </label><br />
+                  <label class="label-text" maxlength="100" ><b>{{DCI}}</b>
+                  </label>
+                </div>
+             
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Tuổi sinh học
+                  </label><br />
+                  <label class="label-text" maxlength="100" ><b>{{TuoiSinhHoc}}</b>
+                  </label>
+                </div>
+                                              
+              </div>
+              <!-- cột phải-->
+              <div class="col-xs-12 col-sm-6">
+             
+                
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Lượng nước cơ thể
+                  </label><br />
+                  <label class="label-text" maxlength="100" ><b>{{LuongNuocCoThe}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Mỡ nội tạng
+                  </label><br />
+                  <label class="label-text"><b>{{MoNoiTang}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Ngực
+                  </label><br />
+                  <label class="label-text" maxlength="100" ><b>{{Nguc}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Eo
+                  </label><br />
+                  <label class="label-text"><b>{{Eo}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Bụng
+                  </label><br />
+                  <label class="label-text" maxlength="100" ><b>{{Bung}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Mông
+                  </label><br />
+                  <label class="label-text"><b>{{Mong}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Đùi
+                  </label><br />
+                  <label class="label-text" maxlength="100" ><b>{{Dui}}</b>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label style="color: black; font-weight: 100 !important;">Tay
+                  </label><br />
+                  <label class="label-text"><b>{{Tay}}</b>
+                  </label>
+                </div>
+              </div>
+             
+          
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">    
+  <button type="button" class="btn btn-primary active" (click)="activeModal.close()">Đóng</button>
+    <!-- <button pButton class="p-button-raised p-button-rounded" label="Đóng" (click)="activeModal.close()"></button> -->
+</div>

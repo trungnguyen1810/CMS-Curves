@@ -1,0 +1,94 @@
+<style>
+    .required{
+    color:red;
+}
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{data.title}}</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form >
+        <div class="col-md-12 row">
+            <div class="col-md-6">
+                <div class="form-group row">
+
+                    <label class="col-sm-5 col-form-label text-label">Mã nhóm quyền <span class="required">(*)</span></label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" maxlength="50" [(ngModel)]="MaNhomQuyen" name="manhomquyen"  >
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="col-md-6">
+                
+        <div class="form-group row">
+            <label class="col-sm-5 col-form-label ">Tên nhóm quyền <span class="required">(*)</span></label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" maxlength="100" [(ngModel)]="TenNhomQuyen" name="tennhomquyen">
+            </div>
+            
+        </div>
+            </div>
+        </div>
+        <div class="col-md-12 row" style="margin-top:5px">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Hoạt động </label>
+                    <div class="col-sm-7">
+                        <input  type="checkbox" [(ngModel)]="isChecked" *ngIf="isChecked" checked name="tinhtrang">
+                        <input  type="checkbox" [(ngModel)]="isChecked" *ngIf="!isChecked" name="tinhtrang">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                
+        <div class="form-group row">
+            <label class="col-sm-5 col-form-label ">Mô tả</label>
+            <div class="col-sm-7">
+                <textarea pInputTextarea [(ngModel)]="MoTa" maxlength="200" name="MoTa"></textarea>
+
+            </div>
+        </div>
+            </div>
+        </div>
+        <hr>
+        <p-table [value]="menus" [(selection)]="selectedMenu" styleClass="p-datatable-striped table table-bordered" [rows]="10" [paginator]="true"  [responsive]="true">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style='width:8%'>STT</th>
+                    <th>Tên Menu</th>
+                    <th>Url</th>                                 
+                   
+                    <th style='width:15%'>
+                       <p-tableHeaderCheckbox></p-tableHeaderCheckbox>Chọn
+                    </th>
+                </tr>
+               
+            </ng-template>
+            <ng-template pTemplate="body" let-menu let-rowIndex="rowIndex">
+                <tr >
+                    <td>{{rowIndex + 1}}</td>
+                    <td>{{menu.Name}}</td>
+                    <td>{{menu.Url}}</td>
+                    <td>
+                        <p-tableCheckbox [value]="menu"></p-tableCheckbox>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </form>
+
+</div>
+<div class="modal-footer">
+    <!-- <button pButton type="button" (click)="saveData()" label="Ghi lại" class="p-button-raised p-button-rounded" icon="pi pi-plus"></button> -->
+    <button pButton type="button" (click)="saveData()" label="Ghi lại" class="p-button-raised p-button-rounded" icon="pi pi-plus"></button>
+    <button pButton type="button"  label="Huỷ bỏ" class="p-button-raised p-button-rounded" (click)="activeModal.close()" ></button>
+
+    <!-- <button class="p-button-raised p-button-rounded" label="Hủy bỏ" (click)="activeModal.close()"></button> -->
+
+
+</div>

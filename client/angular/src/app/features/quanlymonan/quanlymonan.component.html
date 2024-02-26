@@ -1,0 +1,88 @@
+
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Quản lý món ăn</h4>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+        <button pButton type="button" (click)="ThemMoi({Id:0})" label="Thêm mới" class="p-button-raised p-button-rounded" icon="pi pi-plus"></button>
+        <button pButton type="button" (click)="Import()" style="margin-left: 20px;" label="Import" class="p-button-raised p-button-rounded" icon="pi pi-plus"></button>
+        <button pButton type="button" (click)="XemMonAnPhu()" style="margin-left: 20px;" label="Danh sách món ăn phụ" class="p-button-raised p-button-rounded" icon="pi pi-eye"></button>
+
+
+    </ng-template>
+</p-toolbar>
+<hr>
+<span style="font-size: 17px;font-weight: 600;color: #3b7c6d;">Danh sách món ăn chính</span>
+<hr>
+<button pButton pRipple  style="margin-bottom: 5px;" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedMonAns()" [disabled]="!selectedMonAns || !selectedMonAns.length"></button>
+<button type="button" style="margin-bottom: 5px;margin-left:5px" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+<p-table #dt [value]="monans"  [showCurrentPageReport]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-gridlines table table-bordered" [rows]="10" [paginator]="true"  [responsive]="true" [filterDelay]="0" [rowHover]="true"
+ [(selection)]="selectedMonAns" dataKey="Id">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3rem">
+                        <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
+            </th>
+            <th style="width:6%;">STT</th>
+            <th style="width:20%;">Tên món ăn</th>
+            <th style="width: 15%;">Số calo / đơn vị tính</th>
+            <th style="width:15%;">Đơn vị tính</th>
+            <th style="width: 25%;">Mô tả</th>
+            <th style="width: 15%;">Chức năng</th>
+        </tr>
+        <tr>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'TenMonAn', 'startsWith')"
+                    placeholder="tên món" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'Calo', 'startsWith')"
+                    placeholder="Calo" class="p-column-filter txtfiler p-inputtext-sm">
+
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'DonViTinh', 'startsWith')"
+                    placeholder="đơn vị" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-monan>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="monan"></p-tableCheckbox>
+            </td>
+            <td>{{monan.STT}}</td>
+            <td >{{monan.TenMonAn}}</td>
+            <td>{{monan.Calo}}</td>
+            <td>{{monan.DonViTinh}}</td>
+            <td>{{monan.MoTa}}</td>
+            <td>
+                <button pButton pRipple type="button" (click)="ThemMoi(monan)" class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-pencil"></button>
+                <button pButton type="button" (click)="delete(monan)"  icon="pi pi-trash" class="p-button-raised p-button-rounded"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+

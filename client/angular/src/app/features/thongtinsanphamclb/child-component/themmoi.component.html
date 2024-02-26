@@ -1,0 +1,252 @@
+<style>
+    .required {
+        color: red;
+    }
+
+    .btn_upload {
+        cursor: pointer;
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+        color: #fff;
+        background-color: #2a72d4;
+        border: 1px solid #166b8a;
+        padding: 5px 10px;
+    }
+
+    .btn_upload:hover,
+    .btn_upload:focus {
+        background-color: #7ca9e6;
+    }
+
+    .yes {
+        display: flex;
+        align-items: flex-start;
+        margin-top: 10px !important;
+    }
+
+    .btn_upload input {
+        cursor: pointer;
+        height: 100%;
+        position: absolute;
+        filter: alpha(opacity=1);
+        -moz-opacity: 0;
+        opacity: 0;
+    }
+
+    .it {
+        height: 100px;
+        margin-left: 10px;
+    }
+
+    .btn-rmv1,
+    .btn-rmv2,
+    .btn-rmv3,
+    .btn-rmv4,
+    .btn-rmv5 {
+        display: none;
+    }
+
+    .rmv {
+        cursor: pointer;
+        color: #fff;
+        border-radius: 30px;
+        border: 1px solid #fff;
+        display: inline-block;
+        background: rgba(255, 0, 0, 1);
+        margin: -5px -10px;
+    }
+
+    .rmv:hover {
+        background: rgba(255, 0, 0, 0.5);
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{data.title}}</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <div class="col-md-12 row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Tên sản phẩm <span
+                            class="required">(*)</span></label>
+                    <div class="col-sm-7" >
+                        <input type="text" class="p-inputtext-md" disabled="true" pInputText maxlength="100" [(ngModel)]="TenSanPham"
+                            name="tensanpham">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Nhóm sản phẩm<span
+                            class="required">(*)</span></label>
+                    <div class="col-sm-7" >
+                        <p-dropdown [options]="nhomsanphams" [disabled]="true"   [(ngModel)]="selectedNhomSanPham" name="nhomsanpham" optionLabel="TenDanhMuc" [style]="{'width':'165px'}">
+
+                        </p-dropdown>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label text-label">Hiển thị </label>
+                    <div class="col-sm-6" style="margin-left: -29px;">
+                        <input type="checkbox" [(ngModel)]="isChecked" disabled="true" (change)="CheckTinhTrang($event);" [checked]="isChecked == true" name="tinhtrang">
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label text-label">Còn hàng </label>
+                    <div class="col-sm-6" style="margin-left: -29px;">
+                        <input type="checkbox" [(ngModel)]="isChecked_ConHang" disabled="true"  (change)="CheckTinhTrangConHang($event);" [checked]="isChecked_ConHang == true" name="tinhtrangconhang">
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Giá sản phẩm <span class="required">(*)</span></label>
+                    <div class="col-sm-7">
+                      <input type="text" (keyup)="formatMoney($event)" (keypress)="onPressTien($event)"
+                      style="height: 34px;" maxlength="10" class="form-control" [(ngModel)]="Gia" name="giasanpham222"/>
+                        <!-- <input type="number" class="p-inputtext-md" pInputText maxlength="9" [(ngModel)]="Gia" name="giasanpham" > -->
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Ảnh đại diện<span class="required">(*)</span>
+                        <br><span style="font-size:10px;">(600 x 600 px)</span></label>
+
+                    <div class="colss-9" style="margin-left: 15px;">
+                        <div class="yes">
+                            <span class="btn_upload" style="display:none">
+                                <input type="file" disabled="true"  id="imag" title="" (change)="readURL($event);" class="input-img"
+                                    accept=".png, .jpg, .jpeg" />
+                                Chọn
+                            </span>
+                            <img id="ImgPreview" *ngIf="showImg" style="border-radius: 10px;
+                                                  border-style: solid;
+                                                  border-color: #42afaa;
+                                                  margin-left: 20px;" [src]="imageSrc" class="preview1" height="100" width="120" />
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <p style="color:rebeccapurple;font-size:14px;font-weight: 600" >Thông số kỹ thuật sản phẩm</p>
+                <div class="border" style="padding:10px;">
+                    <div class="row">
+                        <div class="form-group row col-12">
+                            <label class="col-sm-5 col-form-label text-label">Màu sắc</label>
+
+                            <p-multiSelect [options]="colors" [disabled]="true" [maxSelectedLabels]="1" [filter]="false" [style]="{'width':'192px','margin-left':'40px'}" name="firstvbf" [(ngModel)]="selectedColors" defaultLabel="Chọn màu" optionLabel="TenMau"
+                                class="multiselect-custom">
+
+                                <ng-template let-color pTemplate="item">
+                                    <div class="country-item row" >
+                                        <div style="background-color:{{ color?.value.MaMau }}; height: 10px;
+                                        margin-top: 7px;
+                                        margin-right: 5px;
+                                        margin-left: 10px;
+                                        width: 30px;"></div>
+                                        <div>{{ color?.value.TenMau }}</div>
+                                    </div>
+                                </ng-template>
+                            </p-multiSelect>
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                            <div class="form-group row col-12">
+                                <label class="col-sm-5 col-form-label text-label">Kích thước</label>
+
+                                <p-multiSelect [options]="sizes" [disabled]="true" [maxSelectedLabels]="1" [filter]="false" [style]="{'width':'192px','margin-left':'40px'}" name="firstvbf2" [(ngModel)]="selectedSizes" defaultLabel="Chọn size" optionLabel="TenSize"
+                                    class="multiselect-custom">
+                                    <ng-template let-size pTemplate="item">
+                                        <div class="country-item">
+                                            <div>{{ size?.value.TenSize }}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </div>
+                        </div>
+                        <div class="row">
+                                <div class="form-group row col-12">
+                                    <label class="col-sm-5 col-form-label text-label">Chất liệu</label>
+
+                                    <p-multiSelect [options]="chatlieus" [disabled]="true" [maxSelectedLabels]="1" [filter]="false" [style]="{'width':'192px','margin-left':'40px'}" name="firstvbf3" [(ngModel)]="selectedChatlieus" defaultLabel="Chọn chất liệu" optionLabel="TenChatLieu"
+                                        class="multiselect-custom">
+                                        <ng-template let-chatlieu pTemplate="item">
+                                            <div class="country-item">
+                                                <div>{{ chatlieu?.value.TenChatLieu }}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-multiSelect>
+                                </div>
+                            </div>
+                </div>
+
+            </div>
+        </div>
+        <br>
+        <hr>
+        <div class="col-12 row">
+            <div class="col-12">
+
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-label">Ảnh chi tiết<span class="required">(*)</span>
+                                <br><span style="font-size:10px;">(600 x 600 px)</span></label>
+                            <div class="colss-9">
+                                <div class="yes">
+                                    <span class="btn_upload" style="display:none">
+                                        <input type="file" id="imag" title="" (change)="onSelectFile($event)" multiple class="input-img"
+                                            accept=".png, .jpg, .jpeg" />
+                                        Chọn
+                                    </span>
+
+                                        <span *ngFor='let url of urls;index as i;' class="img-chitiet" >
+                                            <span *ngIf="showurls[i]" id="{{ 'showanhchitiet_' + i }}">
+                                                <input type="button" id="removeImage1" value="x" class="btn-rmv1 rmv"
+                                                (click)="removeImg($event,i)" style="margin-top: -5px;display:none;
+                                                margin-left: 77px;
+                                                position: absolute;"/>
+                                            <img  [src]="url" style="border-radius: 10px;
+                                            border-style: solid;
+                                            border-color: #42afaa;
+                                            margin-left: 10px;" height="80" width="80" class="preview1"> <br />
+
+                                                                </span>
+                                        </span>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+            </div>
+
+        </div>
+        <br>
+        <hr>
+        <div class="col-12 row">
+                <div class="col-xs-12 col-sm-12">
+                        <label class="label-text">Mô tả<span style="color:red;margin-left:3px;">(*)</span>
+                        </label>
+
+                        <ckeditor
+                        name="first"
+                        [(ngModel)]="MoTa"
+                        [config]="{filebrowserUploadUrl:'/api/admin/tintuc/ckeditor_upload'}"
+                        [readonly]="true"
+                        debounce="300">
+                      </ckeditor>
+                      </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button pButton type="button" (click)="saveData();" label="Ghi lại" class="p-button-raised p-button-rounded"
+        icon="pi pi-plus"></button>
+    <button pButton class="p-button-raised p-button-rounded" label="Hủy bỏ" (click)="activeModal.close()"></button>
+</div>

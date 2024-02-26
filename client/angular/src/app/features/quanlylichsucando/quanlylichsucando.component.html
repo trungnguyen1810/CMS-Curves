@@ -1,0 +1,109 @@
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Quản lý lịch sử cân đo</h4>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+        <button pButton type="button" (click)="ThemMoi({Id:0})" label="Thêm mới" class="p-button-raised p-button-rounded" icon="pi pi-plus"></button>
+        <button pButton type="button" (click)="btnThemMoi({Id:0})" label="Import" class="p-button-raised p-button-rounded" icon="pi pi-plus"></button>
+
+    </ng-template>
+</p-toolbar>
+<p-table #dt [value]="khachhangs" styleClass="p-datatable-striped table table-bordered" [showCurrentPageReport]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]" [rows]="10" [paginator]="true"  [responsive]="true"  [rowHover]="true">
+    <!-- <ng-template pTemplate="caption">
+
+        <div class="table-header">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Nhập Họ tên tìm kiếm" />
+            </span>
+        </div>
+    </ng-template> -->
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Họ và tên</th>
+            <th>Số điện thoại</th>
+            <th>Email</th>
+            <th>Chiều cao</th>
+            <th>Cân nặng</th>
+            <th>BMI</th>
+            <th>Câu lạc bộ</th>
+            <th>Ngày cân đo</th>
+            <th>Chức năng</th>
+        </tr>
+        <tr>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'HoVaTen', 'contains')"
+                    placeholder="Họ tên" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'SoDienThoai', 'contains')"
+                    placeholder="SDT" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'Email', 'contains')"
+                    placeholder="" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'SoThe', 'startsWith')"
+                    placeholder="" class="p-column-filter txtfiler p-inputtext-sm"> -->
+            </th>
+            <th>
+                <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'NhuCauTapLuyen', 'startsWith')"
+                    placeholder="" class="p-column-filter txtfiler p-inputtext-sm"> -->
+            </th>
+            <th>
+                <!-- <input pInputText type="text" (input)="dt.filter($event.target.value, 'CauLacBo', 'startsWith')"
+                    placeholder="" class="p-column-filter txtfiler p-inputtext-sm"> -->
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'CauLacBo', 'contains')"
+                    placeholder="" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'NgayCanDo', 'contains')"
+                  placeholder="" class="p-column-filter txtfiler p-inputtext-sm">
+          </th>
+            <!-- <th>
+                <p-dropdown [options]="statuses" (onChange)="dt.filter($event.value, 'TinhTrang', 'equals')"
+                    styleClass="p-column-filter txtfiler p-inputtext-sm" placeholder="status" [showClear]="true">
+                    <ng-template let-option pTemplate="item">
+                        <span *ngIf="option.value==1" class="tinhtrang-hoatdong">{{option.label}}</span>
+                        <span *ngIf="option.value==2" class="tinhtrang-khonghoatdong">{{option.label}}</span>
+                    </ng-template>
+                </p-dropdown>
+            </th> -->
+            <th>
+            </th>
+
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-khachhang>
+        <tr>
+            <td>{{khachhang.HoVaTen}}</td>
+            <td>{{khachhang.SoDienThoai}}</td>
+            <td>{{khachhang.Email}}</td>
+            <td>{{khachhang.ChieuCao}}</td>
+            <td>{{khachhang.CanNang}}</td>
+            <td>{{khachhang.BMI}}</td>
+            <td>{{khachhang.CauLacBo}}</td>
+            <td>{{khachhang.NgayCanDo}}</td>
+            <td>
+                <button pButton type="button" (click)="XemChiTiet(khachhang)"  label="Xem" class="p-button-raised  p-button-rounded"></button>
+                <button pButton pRipple type="button" (click)="ThemMoi(khachhang)" class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-pencil"></button>
+                <button pButton type="button"  (click)="delete(khachhang)"  icon="pi pi-trash" class="p-button-raised p-button-rounded"></button>
+            </td>
+        </tr>
+    </ng-template>
+
+</p-table>
