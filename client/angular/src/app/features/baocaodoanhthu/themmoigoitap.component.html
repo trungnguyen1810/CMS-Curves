@@ -1,0 +1,93 @@
+<style>
+    .required {
+        color: red;
+    }
+
+    ::ng-deep .my-class .modal-dialog {
+     max-width: 60%;
+     width: 60%;
+}
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{data.title}}</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <div class="col-md-12 row">
+            <div class="col-md-12">
+              <div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <div class="form-group row">
+                  <label class="col-sm-6 col-form-label text-label"> Chọn hội viên <span
+                          class="required">(*)</span></label>
+                  <div class="col-sm-6" >
+                    <p-dropdown [options]="khachhangs" [(ngModel)]="selectedKhachHang" (onChange)="bindThongTin($event)" name="khachhangs" optionLabel="HoVaTen" [filter]="true"
+                    [style]="{'width':'192px'}" >
+               </p-dropdown>
+                  </div>
+                </div>
+              </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4"> <label>Tên khách hàng</label> <span style="font-size:13px;"></span></div>
+                          <div class="col-md-6">
+                            <p>{{TenKhachHang}}</p>
+                            <!-- <input type="text" class="p-inputtext-md" disabled = "true"  pInputText maxlength="200" [(ngModel)]="TenKhachHang"
+                            name="TenKhachHang"> -->
+                          </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4 col-form-label text-label">Số điện thoại</label>
+                      <div class="col-sm-6" style="margin-top: 7px;">
+                        <p>{{SoDienThoai}}</p>
+                        <!-- <input type="text" class="p-inputtext-md" disabled = "true" pInputText maxlength="200" [(ngModel)]="SoDienThoai"
+                        name="SoDienThoai"> -->
+                      </div>
+                  </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                        <div class="col-md-4"> <label>Email </label> <span style="font-size:13px;"></span></div>
+                          <div class="col-md-6">
+                            <p>{{Email}}</p>
+                            <!-- <input type="text" class="p-inputtext-md" disabled = "true" pInputText maxlength="200" [(ngModel)]="Email"
+                            name="TenKhuyenMai"> -->
+                          </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-md-4 col-form-label text-label">Địa chỉ</label>
+                      <div class="col-sm-6" style="margin-top: 7px;">
+                        <p>{{DiaChi}}</p>
+                        <!-- <input type="text" class="p-inputtext-md" disabled = "true" pInputText maxlength="200" [(ngModel)]="DiaChi"
+                        name="DiaChi"> -->
+                      </div>
+                  </div>
+                  </div>
+              </div>
+              <hr>
+              <div class="col-md-12">
+                <div class="form-group row">
+              <label class="col-sm-6 col-form-label text-label"> Thông tin phiếu thu</label>
+              <div class="col-sm-6" >
+                {{goitap.TenGoiTap}}
+
+              </div>
+            </div>
+          </div>
+               </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button pButton type="button" (click)="ThemMoiPhieuThu()" label="Ghi lại" class="p-button-raised p-button-rounded"
+        icon="pi pi-plus"></button>
+    <button pButton class="p-button-raised p-button-rounded" label="Hủy bỏ" (click)="activeModal.close()"></button>
+</div>

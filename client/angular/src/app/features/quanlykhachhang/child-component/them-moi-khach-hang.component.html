@@ -1,0 +1,327 @@
+<style>
+
+  .btn_upload {
+    cursor: pointer;
+    display: inline-block;
+    /* overflow: hidden; */
+    position: relative;
+    color: #fff;
+    background-color: #2a72d4;
+    border: 1px solid #166b8a;
+    padding: 5px 10px;
+  }
+
+  .btn_upload:hover,
+  .btn_upload:focus {
+    background-color: #7ca9e6;
+  }
+
+  .yes {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px !important;
+  }
+
+  .btn_upload input {
+    cursor: pointer;
+    height: 100%;
+    position: absolute;
+    filter: alpha(opacity=1);
+    -moz-opacity: 0;
+    opacity: 0;
+  }
+
+  .it {
+    height: 100px;
+    margin-left: 10px;
+  }
+
+  .btn-rmv1,
+  .btn-rmv2,
+  .btn-rmv3,
+  .btn-rmv4,
+  .btn-rmv5 {
+    display: none;
+  }
+
+  .rmv {
+    cursor: pointer;
+    color: #fff;
+    border-radius: 30px;
+    border: 1px solid #fff;
+    display: inline-block;
+    background: rgba(255, 0, 0, 1);
+    margin: -5px -10px;
+  }
+
+  .rmv:hover {
+    background: rgba(255, 0, 0, 0.5);
+  }
+</style>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+
+<div class="modal-header">
+<h5 class="modal-title">{{Title}}</h5>
+<!-- <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span> -->
+<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <div class="panelCollapse">
+      <div>
+        <div class="collapse show">
+          <div class="row">
+            <!--Cột trái-->
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <label class="label-text">Họ và tên<span style="color:red;margin-left:3px;">(*)</span>
+                </label>
+                <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="HoVaTen"
+                   />
+              </div>
+
+              <div class="form-group">
+                <label class="label-text">Số điện thoại<span style="color:red;margin-left:3px;">(*)</span>
+                </label>
+                <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="SoDienThoai"
+                   />
+              </div>
+
+              <div class="form-group">
+                <label class="label-text">Email
+                </label>
+                <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="Email"
+                   />
+              </div>
+              <div class="form-group" [hidden]="!sothe">
+                <label class="label-text">Số thẻ<span style="color:red;margin-left:3px;">(*)</span>
+                </label>
+                <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="SoThe"
+                   />
+              </div>
+              <div class="form-group" [hidden]="!password">
+                <label class="label-text">Mật khẩu<span style="color:red;margin-left:3px;">(*)</span>
+                </label>
+                <input type="password" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="MatKhau"
+                   />
+              </div>
+
+              <div class="form-group" [hidden]="!password">
+                <label class="label-text">Nhập lại mật khẩu<span style="color:red;margin-left:3px;">(*)</span>
+                </label>
+                <input type="password" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="NhapLaiMatKhau"
+                   />
+              </div>
+
+              <div class="form-group">
+                <label class="label-text">Địa chỉ
+                </label>
+              <textarea class="form-control" rows="4" maxlength="500" [(ngModel)]="DiaChi"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="label-text">Chọn câu lạc bộ</label>
+              <p-dropdown [options]="caulacbos" [(ngModel)]="selectedCauLacBo" [disabled]="true" optionLabel="CauLacBo" [filter]="true" [style]="{'width':'100%', 'height':'34px'}"
+                ></p-dropdown>
+            </div>
+
+            <div class="form-group">
+              <label class="label-text">Chọn gói tập</label>
+              <p-dropdown [options]="goitaps" [(ngModel)]="selectedGoiTap" optionLabel="TenCauHinh" 
+              (onChange)="onChange($event)" [filter]="true" [style]="{'width':'100%', 'height':'34px'}"
+                filterBy="TenCauHinh"></p-dropdown>
+            </div>
+
+            <div class="form-group"  [hidden]="true">
+              <label class="label-text">Voucher
+              </label>
+              <input type="text" [disabled]="flaggoitap" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="Voucher" (input)="onChangeVoucher($event.target.value)"/>
+            </div>
+
+            <div class="form-group">
+              <label class="label-text">Phí gia nhập
+              </label>
+              <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="PhiGiaNhap" (keyup)="formatMoney1($event)" (keypress)="onPressTien($event)"/>
+            </div>
+            <div class="form-group">
+              <label class="label-text">Thử thách </label>
+              <div class="form-control" style="border: none;">
+                <p-radioButton name="30ngay" value="1" [(ngModel)]="ThuThach" inputId="30ngay"></p-radioButton>
+                30 ngày
+                <p-radioButton name="90ngay" value="2" [(ngModel)]="ThuThach" inputId="90ngay">
+                </p-radioButton>
+                90 ngày
+                <p-radioButton name="0ngay" value="0" [(ngModel)]="ThuThach" inputId="0ngay">
+                </p-radioButton>
+                Không
+              </div>
+            </div>
+            </div>
+            <!-- cột phải-->
+            <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label class="label-text">Tình trạng hoạt động <span style="color:red;margin-left:3px;">(*)</span></label>
+              <div class="form-control" style="border: none;">
+                <p-radioButton name="hoatdong" [disabled]=true value="1" [(ngModel)]="tinhtrang" inputId="hoatdong"></p-radioButton>
+               Đang tập
+               <p-radioButton name="khonghoatdong" [disabled]=true value="0" [(ngModel)]="tinhtrang" inputId="khonghoatdong"></p-radioButton>
+               ngừng tập
+               <p-radioButton name="hoatdong" [disabled]=true value="2" [(ngModel)]="tinhtrang" inputId="hoatdong"></p-radioButton>
+               Bảo lưu
+               <p-radioButton name="khonghoatdong" [disabled]=true value="3" [(ngModel)]="tinhtrang" inputId="khonghoatdong"></p-radioButton>
+               Chuyển phòng tập
+            </div>
+              </div>
+              <div class="form-group">
+                <div class="col-12 row">
+                 <div class="col-9">
+                  <div class="form-group">
+                    <label class="label-text">Ảnh đại diện  </label>
+                    <div class="col-9">
+                      <div class="yes">
+                        <span class="btn_upload">
+                          <input type="file" id="imag" title="" (change)="readURL($event);" class="input-img"
+                            accept=".png, .jpg, .jpeg" />
+                          Chọn
+                        </span>
+                        <img id="ImgPreview" *ngIf="showImg" style="border-radius: 10px;
+                        border-style: solid;
+                        border-color: #42afaa;
+                        margin-left: 20px;" [src]="imageSrc" class="preview1" height="100" width="120" />
+                        <input type="button" id="removeImage1" value="x" class="btn-rmv1" (click)="removeImg($event)" />
+                      </div>
+                    </div>
+                  </div>
+                 </div>
+                </div>
+
+              </div>
+              <div class="form-group">
+                <div class="col-12 row">
+                 <div class="col-9">
+                  <div class="form-group">
+                    <label class="label-text">Ảnh bìa  </label>
+                    <div class="col-9">
+                      <div class="yes">
+                        <span class="btn_upload">
+                          <input type="file" id="imag" title="" (change)="readURL2($event);" class="input-img"
+                            accept=".png, .jpg, .jpeg" />
+                          Chọn
+                        </span>
+                        <img id="ImgPreview2" *ngIf="showImg2" style="border-radius: 10px;
+                        border-style: solid;
+                        border-color: #42afaa;
+                        margin-left: 20px;" [src]="imageSrc2" class="preview2" height="100" width="120" />
+                        <input type="button" id="removeImage2" value="x" class="btn-rmv2" (click)="removeImg2($event)" />
+                      </div>
+                    </div>
+                  </div>
+                 </div>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label class="label-text" style='width: 100%; padding-top: 25px;'>Ngày sinh
+                </label>
+                <p-calendar [(ngModel)]="NgaySinh"  [locale]="en" maxlength="100" dateFormat="dd/mm/yy" [showIcon]="true" inputId="icon"></p-calendar>
+              </div>
+
+              <div class="form-group">
+                <label class="label-text" style='width: 100%; padding-top: 25px;'>Ngày bắt đầu
+                </label>
+                <p-calendar [(ngModel)]="NgayBatDau" [disabled]="flagbatdau" [locale]="en" maxlength="100" dateFormat="dd/mm/yy"  (ngModelChange)="onBlurMethod($event)"  (onSelect)="moveDate($event)" [showIcon]="true" inputId="icon"></p-calendar>
+              </div>
+
+              <div class="form-group" >
+                <label class="label-text" style='width: 100%;'>Ngày hết hạn
+                </label>
+                <p-calendar [(ngModel)]="NgayKetThuc" [disabled]="true" [locale]="en" maxlength="100" dateFormat="dd/mm/yy" [showIcon]="true" inputId="icon"></p-calendar>
+            </div>
+            <div class="form-group">
+              <label class="label-text" style='width: 100%;'>Ngày đăng ký
+              </label>
+              <p-calendar [(ngModel)]="NgayDangKy" [locale]="en" maxlength="100" dateFormat="dd/mm/yy"
+                [showIcon]="true" inputId="icon"></p-calendar>
+            </div>
+            <div class="form-group">
+              <label class="label-text">Tiền đặt cọc
+              </label>
+              <input type="text" style="height: 34px;" [disabled]="flaggoitap" maxlength="100" class="form-control" [(ngModel)]="TienDatCoc" (keyup)="formatMoney($event)" (keypress)="onPressTien($event)"/>
+            </div>
+            <div class="form-group">
+              <label class="label-text">Hình thức thanh toán
+              </label>
+              <select class="form-control" id="hinhthucthanhtoan" name="hinhthucthanhtoan" [disabled]="flaggoitap"
+                      [(ngModel)]="HinhThucThanhToan">
+                      <option value="1">Tiền mặt</option>
+                      <option value="2">Chuyển khoản</option>
+                      <option value="3">Quẹt thẻ</option>
+                      <option value="4">Quẹt thẻ trả góp</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="label-text">Số ngày tặng
+              </label>
+              <input type="number" min="0" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="SoNgayTang" (input)="onEnterChange($event.target.value)" />
+            </div>
+
+            </div>
+            <div class="col-xs-12 col-sm-12">
+              <div class="form-group">
+                <label class="label-text">Nguồn khách hàng</label>
+                <p-dropdown [options]="nguonkhachhangs" [(ngModel)]="selectedNguonKhachHang" optionLabel="TenNguonKhachHang" [filter]="true" [style]="{'width':'100%', 'height':'34px'}"
+                filterBy="TenNguonKhachHang"></p-dropdown>
+              </div>
+              <div class="form-group">
+                <label class="label-text">Thông tin Facebook/ Zalo
+                </label>
+                <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="ZaloFb"/>
+              </div>
+              <div class="form-group" >
+                <label class="label-text">Nghề nghiệp
+                </label>
+                <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="NgheNghiep"/>
+              </div>
+              <div class="form-group">
+                <label class="label-text">Mục tiêu luyện tập
+                </label>
+                <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="GhiChu"/>
+              </div>
+              <div class="form-group">
+                <label class="label-text">Liên lạc khẩn cấp
+                </label>
+                <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="LienLacKhanCap"/>
+              </div>
+              <div class="form-group">
+                <label class="label-text">Tiểu sử sức khỏe</label>
+                <p-multiSelect [options]="tieusus" [maxSelectedLabels]="1" [filter]="true" [style]="{'width':'100%'}" [(ngModel)]="selectedTieuSu" defaultLabel="Chọn tiểu sử bệnh" optionLabel="TenBenh"
+                              class="multiselect-custom">
+                      <ng-template let-tieusu pTemplate="item">
+                          <div class="country-item">
+                              <div>{{ tieusu?.value.TenBenh }}</div>
+                          </div>
+                      </ng-template>
+                </p-multiSelect>
+              </div>
+              <div class="form-group">
+                <label class="label-text">Tiểu sử bệnh khác
+                </label>
+                <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="TieuSuSucKhoe"/>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" *ngIf="flagghilai == 1" class="btn btn-primary active" (click)="Save()">Ghi lại</button>
+<button type="button" class="btn btn-primary active" (click)="activeModal.close()">Hủy bỏ</button>
+</div>

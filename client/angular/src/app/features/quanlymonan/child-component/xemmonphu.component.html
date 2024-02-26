@@ -1,0 +1,67 @@
+<style>
+.action_donhang{
+  
+  color: #2196f3;
+  text-decoration: underline;
+  font-weight: 600;
+  padding: 4px;
+  cursor: pointer;
+}
+</style>
+<div class="modal-header" *ngIf="show">
+    <h4 class="modal-title" id="modal-basic-title">Danh sách món ăn phụ</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body" *ngIf="show">
+    <hr>
+    <span style="font-size: 17px;font-weight: 600;color: #3b7c6d;">Danh sách món ăn phụ</span>
+    <hr>
+    <p-table #dt [value]="monans" styleClass="p-datatable-gridlines table table-bordered" [rows]="10" [paginator]="true"  [responsive]="true" [filterDelay]="0" [rowHover]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:5%;">STT</th>
+
+                <th style="width:20%;">Tên món ăn</th>            
+                <th style="width: 15%;">Calo /DVT</th>   
+                <th style="width:15%;">Đơn vị tính</th>      
+                <th style="width:15%;">Chức năng</th> 
+            </tr>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'TenMonAn', 'startsWith')"
+                        placeholder="tên món" class="p-column-filter txtfiler p-inputtext-sm">
+                </th>           
+                <th>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'Calo', 'startsWith')"
+                        placeholder="Calo" class="p-column-filter txtfiler p-inputtext-sm">    
+                </th>               
+                <th>
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'DonViTinh', 'startsWith')"
+                    placeholder="đơn vị" class="p-column-filter txtfiler p-inputtext-sm">  
+                </th>
+                <th>
+                     
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-monan>
+            <tr>
+                <td>{{monan.STT}}</td>
+                <td >{{monan.TenMonAn}}</td>    
+                <td>{{monan.Calo}}</td>
+                <td>{{monan.DonViTinh}}</td>   
+                <td>
+                    <span class="action_donhang" (click)="Sua(monan)">Sửa</span>
+                    <span class="action_donhang"  (click)="Xoa(monan)">Xóa</span>
+                    <span class="action_donhang" (click)="Chuyen(monan)">chuyển danh sách</span>   
+            </td>             
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="modal-footer" *ngIf="show">  
+    <button  class="btn btn-primary active"  (click)="activeModal.close()">Đóng</button>
+</div>

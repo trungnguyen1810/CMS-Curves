@@ -1,0 +1,66 @@
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Quản lý tin tức</h4>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+        <button pButton type="button" (click)="btnThemMoi({Id:0})" label="Thêm mới" class="p-button-raised p-button-rounded" icon="pi pi-plus"></button>
+
+    </ng-template>
+</p-toolbar>
+<p-table #dt [value]="tintucs" styleClass="p-datatable-striped table table-bordered" [rows]="10"  [resizableColumns]="true" [paginator]="true"  [responsive]="true"  styleClass="ui-table-customers" [rowHover]="true"
+[filterDelay]="0" [globalFilterFields]="['TieuDe','TomTat','TenLoaiTinTuc']" [showCurrentPageReport]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+    <ng-template pTemplate="caption">
+
+        <div class="table-header">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Nhập tìm kiếm" />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>STT</th>
+            <th>Tiêu đề</th>
+            <th>Tóm tắt</th>
+            <th>Loại tin tức</th>
+            <th>Ảnh đại diện</th>
+            <th>Link chia sẻ</th>
+            <th>Thứ tự sắp xếp</th>
+            <th>Tình Trạng</th>
+            <th>Chức năng</th>
+        </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-tintuc>
+        <tr>
+            <td>{{tintuc.STT}}</td>
+            <td>{{tintuc.TieuDe}}</td>
+            <td>{{tintuc.TomTat}}</td>
+            <td>{{tintuc.TenLoaiTinTuc}}</td>
+            <td>
+                <img  src="{{tintuc.AnhDaiDien}}" width="120"
+                 style="vertical-align: middle" class="img-thumbnail" />
+            </td>
+            <td>{{tintuc.LinkChiaSe}}</td>
+            <td>{{tintuc.ThuTuSapXep}}</td>
+            <td *ngIf="tintuc.TinhTrang==1"><span [class]="'tinhtrang-hoatdong'">Đang hoạt động</span></td>
+            <td *ngIf="tintuc.TinhTrang==0"><span [class]="'tinhtrang-khonghoatdong'">Không hoạt động</span></td>
+            <td>{{tintuc.MoTa}}</td>
+            <td>
+                <button pButton pRipple type="button" (click)="btnThemMoi(tintuc)" class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-pencil"></button>
+                <button pButton type="button" (click)="deleteTinTuc(tintuc)"  icon="pi pi-trash" class="p-button-raised p-button-rounded"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

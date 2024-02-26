@@ -1,0 +1,95 @@
+
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Quản lý lịch sử luyện tập</h4>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-toolbar styleClass="p-mb-5">
+    <ng-template pTemplate="left">
+        <button pButton type="button" style="margin-top: 20px;" (click)="ThemMoi({Id:0})" label="Thêm mới" class="p-button-raised p-button-rounded" icon="pi pi-plus"></button>
+        <button pButton type="button" (click)="QuetMaVach()" style="margin-left: 20px;margin-top: 20px;" label="Quét mã vạch" class="p-button-raised p-button-rounded" icon="pi pi-eye"></button>
+        <div class="col-sm-3">        Từ ngày <span style="color:red;">(*) </span>
+          <p-calendar [(ngModel)]="TuNgay" dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+      </div>
+      <div class="col-sm-3">        Đến ngày <span style="color:red;">(*) </span>
+          <p-calendar [(ngModel)]="DenNgay" dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+      </div>
+      &nbsp;
+        <button class="btn btn-info active" style="margin-top: 20px;" (click)="XuatBaoCao()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+    </ng-template>
+</p-toolbar>
+
+<p-table #dt [value]="lichsus" styleClass="p-datatable-gridlines table table-bordered" [rows]="10" [paginator]="true"  [responsive]="true" [filterDelay]="0"
+ [rowHover]="true" [showCurrentPageReport]="true" [totalRecords]="totalRecords" [loading]="loading" [lazy]="true" (onLazyLoad)="loadCustomers($event)"
+ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+ <!-- <ng-template pTemplate="caption">
+  <div class="p-d-flex">
+      <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+  </div>
+</ng-template> -->
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:8%;">STT</th>
+            <th style="width:20%;">Tên hội viên</th>
+            <th style="width:20%;">Số điện thoại</th>
+            <th style="width:20%;">Số thẻ</th>
+            <th style="width: 15%;">Tháng/năm tập</th>
+            <th style="width:15%;">Ngày tập luyện</th>
+            <th style="width: 15%;">Chức năng</th>
+        </tr>
+        <tr>
+            <th>
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'TenHoiVien', 'contains')"
+                    placeholder="tên hội viên" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'SoDienThoai', 'contains')"
+                    placeholder="sdt" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'SoThe', 'contains')"
+                    placeholder="số thẻ" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'ThangNam', 'contains')"
+                    placeholder="mm/yyyy" class="p-column-filter txtfiler p-inputtext-sm">
+
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'NgayTap', 'contains')"
+                    placeholder="dd/mm/yyyy" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+
+            <th>
+
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-monan>
+        <tr>
+            <td>{{monan.STT}}</td>
+            <td >{{monan.TenHoiVien}}</td>
+            <td >{{monan.SoDienThoai}}</td>
+            <td >{{monan.SoThe}}</td>
+            <td>{{monan.ThangNam}}</td>
+            <td>{{monan.NgayTap}}</td>
+            <td>
+                <button pButton pRipple type="button" (click)="ThemMoi(monan)" class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-pencil"></button>
+                <button pButton type="button" (click)="delete(monan)"  icon="pi pi-trash" class="p-button-raised p-button-rounded"></button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+

@@ -1,0 +1,114 @@
+<style>
+  
+    .btn_upload {
+      cursor: pointer;
+      display: inline-block;
+      overflow: hidden;
+      position: relative;
+      color: #fff;
+      background-color: #2a72d4;
+      border: 1px solid #166b8a;
+      padding: 5px 10px;
+    }
+  
+    .btn_upload:hover,
+    .btn_upload:focus {
+      background-color: #7ca9e6;
+    }
+  
+    .yes {
+      display: flex;
+      align-items: flex-start;
+      margin-top: 10px !important;
+    }
+  
+    .btn_upload input {
+      cursor: pointer;
+      height: 100%;
+      position: absolute;
+      filter: alpha(opacity=1);
+      -moz-opacity: 0;
+      opacity: 0;
+    }
+  
+    .it {
+      height: 100px;
+      margin-left: 10px;
+    }
+  
+    .btn-rmv1,
+    .btn-rmv2,
+    .btn-rmv3,
+    .btn-rmv4,
+    .btn-rmv5 {
+      display: none;
+    }
+  
+    .rmv {
+      cursor: pointer;
+      color: #fff;
+      border-radius: 30px;
+      border: 1px solid #fff;
+      display: inline-block;
+      background: rgba(255, 0, 0, 1);
+      margin: -5px -10px;
+    }
+  
+    .rmv:hover {
+      background: rgba(255, 0, 0, 0.5);
+    }
+  </style>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+
+<div class="modal-header">
+  <h5 class="modal-title">Hoàn gói tập</h5>
+  <!-- <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span> -->
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div class="panelCollapse">
+        <div>
+          <div class="collapse show">
+            <div class="row">
+              <!--Cột trái-->
+              <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                  <label class="label-text">Số ngày hoàn trả<span style="color:red;margin-left:3px;">(*)</span>
+                  </label>
+                  <input type="number" style="height: 34px;" min="0" maxlength="100" class="form-control" [(ngModel)]="SoNgay" placeholder="Số ngày hoàn trả"
+                     />
+                </div>
+                <div class="form-group">
+                  <label class="label-text">Số tiền hoàn trả<span style="color:red;margin-left:3px;">(*)</span>
+                  </label>
+                  <input type="text" (keyup)="formatMoney($event)" (keypress)="onPressTien($event)"
+                    style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="GiaTien" />
+                </div>
+                <div class="form-group">
+                  <label class="label-text" style='width: 100%;'>Ngày hết hạn voucher <span style="color:red;margin-left:3px;">(*)</span>
+                  </label> 
+                  <p-calendar [(ngModel)]="NgayHetHanVoucher" [minDate]="minimumDate" [locale]="en" maxlength="100" dateFormat="dd/mm/yy" [showIcon]="true" inputId="icon"></p-calendar>
+                </div>
+                <div class="form-group">
+                  <label class="label-text">Lý do hoàn
+                  </label>
+                  <textarea id="LyDo" name="LyDo" style="width: 100%; border: 1px solid #ccc;" maxlength="255" rows="4" cols="50" [(ngModel)]="LyDo"></textarea>
+                </div>                     
+              </div>
+              
+          
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary active" (click)="Save()">Xác nhận</button>
+  <button type="button" class="btn btn-primary active" (click)="activeModal.close()">Hủy bỏ</button>
+</div>

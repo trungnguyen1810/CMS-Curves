@@ -1,0 +1,54 @@
+<style>
+    .required {
+        color: red;
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{data.title}}</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <div class="col-md-12 row">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Chọn hội viên<span
+                            class="required">(*)</span></label>
+                    <div class="col-sm-7">
+                        <p-dropdown [options]="hoiviens" [(ngModel)]="selectedHoiVien" name="selecthoivien" optionLabel="ThongTinHoiVien"
+                        [style]="{'width':'400px'}" [filter]="true" (onChange)="changeHoiVien($event)">                        </p-dropdown>
+
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-5 col-form-label text-label">Thông tin facebook/zalo</label>
+                  <div class="col-sm-7">
+                     <span> {{Zalofb}}</span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-5 col-form-label text-label">Mục tiêu luyện tập</label>
+                  <div class="col-sm-7">
+                     <span> {{GhiChu}}</span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Ngày tập <span
+                        class="required">(*)</span></label>
+                    <div class="col-sm-7">
+
+                        <p-calendar [(ngModel)]="NgayTap" name='ngaytap' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button pButton type="button" (click)="saveData();" label="Ghi lại" class="p-button-raised p-button-rounded"
+        icon="pi pi-plus"></button>
+    <button pButton class="p-button-raised p-button-rounded" label="Hủy bỏ" (click)="activeModal.close()"></button>
+</div>

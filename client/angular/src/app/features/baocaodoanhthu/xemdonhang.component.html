@@ -1,0 +1,138 @@
+<style>
+.card-header{
+    padding: 1px;
+    background: #d2cbcba8;
+}
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Chi tiết phiếu thu</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne" style="text-decoration: underline;">
+                            Thông tin khách hàng
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="col-md-12 row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-5">Tên khách hàng: </label>
+                                    <div class="col-sm-7">
+                                        {{data.TenKhachHang}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-5">Số điện thoại: </label>
+                                    <div class="col-sm-7">
+                                            {{data.SoDienThoai}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-5">Địa chỉ: </label>
+                                    <div class="col-sm-7">
+                                            {{data.DiaChi}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-5">Email: </label>
+                                    <div class="col-sm-7">
+                                            {{data.Email}}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                            aria-expanded="true" aria-controls="collapseTwo" style="text-decoration: underline;">
+                            Thông tin sản phẩm
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="col-md-12 row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-5">Tiền thuê tủ đồ: </label>
+                                    <div class="col-sm-7">
+                                            {{data.TongTienTuDo}} đ
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                  <label class="col-sm-6">Từ ngày: {{data.TuNgay}}</label>
+                                  <label class="col-sm-6">Đến ngày: {{data.DenNgay}}</label>
+                              </div>
+                          </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-5">Tiền mua dụng cụ: </label>
+                                    <div class="col-sm-7">
+                                            {{data.TongTienDungCu}} đ
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-sm-5">Tổng tiền: </label>
+                                    <div class="col-sm-7">
+                                        {{TongSoTien}} đ
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                  <label class="col-sm-6">Hình thức thanh toán:</label>
+                  <div class="col-sm-6" >
+                    <p-radioButton name="groupname" value="1" [(ngModel)]="selectedHinhThucThanhToan" label="Tiền mặt"></p-radioButton>
+                    <p-radioButton name="groupname" value="2" [(ngModel)]="selectedHinhThucThanhToan" label="Qua thẻ"></p-radioButton>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-sm-6">Trả trước:</label>
+                <input type="number" class="p-inputtext-md"  pInputText maxlength="200" [(ngModel)]="SoTienThanhToan" name="SoTienThanhToan">
+            </div>
+        </div>
+
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button pButton class="btn btn-primary active" (click)="saveData();">Lưu & xuất phiếu in</button>
+    <button pButton class="btn btn-primary active" (click)="activeModal.close()">Đóng</button>
+</div>

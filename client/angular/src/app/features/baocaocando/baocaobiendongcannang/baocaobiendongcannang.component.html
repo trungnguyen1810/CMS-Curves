@@ -1,0 +1,94 @@
+<style>
+
+</style>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Báo cáo danh sách hội viên giảm cân, tăng cân theo khoảng thời gian</h4>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-toolbar styleClass="p-mb-4">
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgay" dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon" appendTo="body" ></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgay" dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4" >Câu lạc bộ <span style="color:red;">(*) </span>
+          <p-multiSelect [options]="caulacbos" [(ngModel)]="selectedCauLacBo" defaultLabel="Lựa chọn câu lạc bộ" optionLabel="TenCauLacBo" selectedItemsLabel="{0} câu lạc bộ"></p-multiSelect></div>
+        </div>
+        <div class="col-md-12" style="padding-top: 1%">
+        <button class="btn btn-info active" (click)="TimKiem()">Tìm kiếm</button>
+        &nbsp;
+        <button class="btn btn-info active" (click)="XuatBaoCao()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+</p-toolbar>
+<p-table #dt [value]="danhsachs" styleClass="p-datatable-gridlines table table-bordered" [rows]="10" [paginator]="true"
+    [responsive]="true" [filterDelay]="0" [rowHover]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:7%;" pSortableColumn="STT">STT<p-sortIcon field="STT"></p-sortIcon></th>
+            <th>Họ tên </th>
+            <th>Số điện thoại</th>
+            <th>Câu lạc bộ</th>
+            <th>Số cân cũ</th>
+            <th>Ngày đo</th>
+            <th>Số cân mới</th>
+            <th>Ngày đo</th>
+            <th pSortableColumn="ChenhLech">Chênh lệch<p-sortIcon field="ChenhLech"></p-sortIcon></th>
+            <th pSortableColumn="KetLuan">Kết luận<p-sortIcon field="KetLuan"></p-sortIcon></th>
+        </tr>
+        <tr>
+            <th>
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'HoTen', 'startsWith')"
+                    placeholder="Họ tên" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'SoDienThoai', 'contains')"
+                    placeholder="SDT" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'CauLacBo', 'startsWith')"
+                    placeholder="" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-nhanvien>
+        <tr>
+            <td>{{nhanvien.STT}}</td>
+            <td>{{nhanvien.HoVaTen}}</td>
+            <td>{{nhanvien.SoDienThoai}}</td>
+            <td>{{nhanvien.CauLacBo}}</td>
+            <td>{{nhanvien.CanNangBatDau}}</td>
+            <td>{{nhanvien.NgayBatDau}}</td>
+            <td>{{nhanvien.CanNangKetThuc}}</td>
+            <td>{{nhanvien.NgayKetThuc}}</td>
+            <td>{{nhanvien.ChenhLech}}</td>
+            <td>{{nhanvien.KetLuan}}</td>
+        </tr>
+    </ng-template>
+</p-table>

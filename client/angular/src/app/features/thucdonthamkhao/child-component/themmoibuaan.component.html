@@ -1,0 +1,105 @@
+
+<div class="modal-header" *ngIf="showlist">
+    <h4 class="modal-title" id="modal-basic-title">Danh sách bữa ăn</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body" *ngIf="showlist">
+    <form>
+        <div class="col-md-12 row">
+            <div class="col-md-6">                
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label text-label">Ngày <span
+                        class="required">(*)</span></label>
+                    <div class="col-sm-7">                                            
+                        <p-calendar [(ngModel)]="NgayThamKhao" name='ngaytap2' (onSelect)="onSelectNgay($event)" dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+                    </div>
+                </div>
+            </div>
+            
+        
+        </div>
+        <hr>
+        <div class="col-md-12 ">
+            <div class="row">
+                    <div class="col-md-6"> <label>Danh sách bữa ăn trong ngày {{NgayThamKhao | date: 'dd/MM/yyyy'}}</label><span style="color:red;font-size:12px;"> (click vào dấu + để thêm mới bữa ăn)</span> </div>
+                    <div class="col-md-6">
+                        <span class="col-md-6">Tên bữa ăn</span>
+                        <input type="text" class="p-inputtext-md col-md-6" pInputText maxlength="200" [(ngModel)]="TenBuaAn"
+                        name="buaanmoi">                           
+                            <button pButton type="button" (click)="ThemMoiBuaAn();" class="p-button-raised p-button-rounded"
+                        icon="pi pi-plus" style="margin-left: 20px;"></button>
+                    </div> 
+            </div>
+              
+            
+            <br><br>
+            <p-table [value]="datas" #dt dataKey="Id" editMode="row">
+                <ng-template pTemplate="header">
+                    <tr>
+                            
+                            <th>Ngày</th>
+                            <th pSortableColumn="TenBuaAn">Tên bữa ăn <p-sortIcon field="TenBuaAn"></p-sortIcon></th>
+                            <th pSortableColumn="ThuTuSapXep">Thứ tự sắp xếp <p-sortIcon field="ThuTuSapXep"></p-sortIcon></th>
+                        <th style="width:8rem">Chức năng</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
+                    <tr [pEditableRow]="product">
+                      
+                        <td >{{product.NgayThamKhao}}</td>
+                        <td >{{product.TenBuaAn}} </td>
+                        <td >{{product.ThuTuSapXep}}</td>           
+                        <td style="text-align:center">
+                            <button  pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="EditTenBuaAn(product)" class="p-button-rounded p-button-text"></button>
+                            <button  pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="XoaTenBuaAn(product)" class="p-button-rounded p-button-text p-button-danger"></button>
+
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>     
+    </form>
+</div>
+<div class="modal-footer" *ngIf="showlist"> 
+    <button pButton class="p-button-raised p-button-rounded" label="Đóng" (click)="activeModal.close()"></button>
+</div>
+
+<div class="modal-header" *ngIf="!showlist">
+    <h4 class="modal-title" id="modal-basic-title">Chỉnh sửa thông tin bữa ăn</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="closeFormEdit()">X</span>
+
+</div>
+<div class="modal-body" *ngIf="!showlist">
+    <form>
+        <div class="col-md-12 row">
+            <div class="col-md-6">                
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label text-label">Tên bữa ăn <span
+                        style="color:red">(*)</span></label>
+                    <div class="col-sm-12">                                            
+                        <input type="text" class="p-inputtext-md col-md-6" pInputText maxlength="200" [(ngModel)]="TenBuaAnEdit"
+                        name="buaanmoiedit"> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">                
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label text-label">Thứ tự sắp xếp <span
+                        style="color:red">(*)</span></label>
+                    <div class="col-sm-12">                                            
+                        <input type="number" class="p-inputtext-md col-md-6" pInputText maxlength="200" [(ngModel)]="ThuTuSapXepEdit"
+                        name="buaanmoiedit22"> 
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+                 
+    </form>
+</div>
+<div class="modal-footer" *ngIf="!showlist">
+    <button pButton class="p-button-raised p-button-rounded" label="Ghi lại" (click)="SaveFormEdit()"></button> 
+    <button pButton class="p-button-raised p-button-rounded" label="Đóng" (click)="closeFormEdit()"></button>
+</div>

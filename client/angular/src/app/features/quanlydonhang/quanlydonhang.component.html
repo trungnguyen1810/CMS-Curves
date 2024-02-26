@@ -1,0 +1,104 @@
+<style>
+.action_donhang{
+
+    color: #2196f3;
+    text-decoration: underline;
+    font-weight: 600;
+    padding: 4px;
+    cursor: pointer;
+}
+</style>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Quản lý thông tin đơn hàng</h4>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-table #dt [value]="donhangs" styleClass="p-datatable-gridlines table table-bordered" [rows]="10" [paginator]="true"
+    [responsive]="true" [filterDelay]="0" [rowHover]="true" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:5%;">STT</th>
+            <th style="width:13%;">Tên sản phẩm</th>
+            <th style="width:15%;">Tên khách hàng</th>
+            <th>Địa chỉ</th>
+            <th>Số điện thoại</th>
+            <th style="width:10%;">Số lượng</th>
+            <th>Tình trạng</th>
+            <th style="width:13%;">Câu lạc bộ</th>
+            <th style="width:20%;">Chức năng</th>
+        </tr>
+        <tr>
+            <th>
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'TenSanPham', 'contains')"
+                    placeholder="Tên sp" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'TenKhachHang', 'contains')"
+                    placeholder="khách hàng" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'DiaChi', 'contains')"
+                    placeholder="địa chỉ" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'SoDienThoai', 'contains')"
+                    placeholder="sdt" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'SoLuong', 'contains')"
+                    placeholder="số lượng" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+                <p-dropdown [options]="statuses" (onChange)="dt.filter($event.value, 'TinhTrangDonHang', 'equals')"
+                    styleClass="p-column-filter txtfiler p-inputtext-sm" placeholder="status" [showClear]="true">
+                    <ng-template let-option pTemplate="item">
+                        <span *ngIf="option.value==2" class="tinhtrang-hoatdong">{{option.label}}</span>
+                        <span *ngIf="option.value==1" class="tinhtrang-khonghoatdong">{{option.label}}</span>
+                    </ng-template>
+                </p-dropdown>
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'TenCauLacBo', 'contains')"
+                    placeholder="tên clb" class="p-column-filter txtfiler p-inputtext-sm">
+            </th>
+            <th>
+            </th>
+
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-nhanvien>
+        <tr>
+            <td>{{nhanvien.STT}}</td>
+            <td>{{nhanvien.TenSanPham}}</td>
+            <td>{{nhanvien.TenKhachHang}}</td>
+            <td>{{nhanvien.DiaChi}}</td>
+            <td>{{nhanvien.SoDienThoai}}</td>
+            <td>{{nhanvien.SoLuong}}</td>
+            <td *ngIf="nhanvien.TinhTrangDonHang==2"><span [class]="'tinhtrang-hoatdong'">Đã xử lý</span></td>
+            <td *ngIf="nhanvien.TinhTrangDonHang==1"><span [class]="'tinhtrang-khonghoatdong'">Chưa xử lý</span></td>
+            <td>{{nhanvien.TenCauLacBo}}</td>
+            <td>
+                    <span class="action_donhang" (click)="Xem(nhanvien)" tooltipPosition="top" pTooltip="Xem chi tiết">Xem</span>
+                    <span class="action_donhang" *ngIf="nhanvien.TinhTrangDonHang==1" (click)="XuLy(nhanvien)" tooltipPosition="top" pTooltip="Xử lý">Xử lý</span>
+                    <span class="action_donhang" (click)="delete(nhanvien)" tooltipPosition="top" pTooltip="Xóa">Xóa</span>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

@@ -1,0 +1,426 @@
+<style>
+  .btn_upload {
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    color: #fff;
+    background-color: #2a72d4;
+    border: 1px solid #166b8a;
+    padding: 5px 10px;
+  }
+    .card-header {
+        padding: 1px;
+        background: #d2cbcba8;
+    }
+    ::ng-deep .my-class .modal-dialog {
+     max-width: 70%;
+     width: 70%;
+}
+
+
+  .btn_upload:hover,
+  .btn_upload:focus {
+    background-color: #7ca9e6;
+  }
+
+  .yes {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px !important;
+  }
+
+  .btn_upload input {
+    cursor: pointer;
+    height: 100%;
+    position: absolute;
+    filter: alpha(opacity=1);
+    -moz-opacity: 0;
+    opacity: 0;
+  }
+
+  .it {
+    height: 100px;
+    margin-left: 10px;
+  }
+
+  .btn-rmv1,
+  .btn-rmv2,
+  .btn-rmv3,
+  .btn-rmv4,
+  .btn-rmv5 {
+    display: none;
+  }
+
+  .rmv {
+    cursor: pointer;
+    color: #fff;
+    border-radius: 30px;
+    border: 1px solid #fff;
+    display: inline-block;
+    background: rgba(255, 0, 0, 1);
+    margin: -5px -10px;
+  }
+
+  .rmv:hover {
+    background: rgba(255, 0, 0, 0.5);
+  }
+
+  .btntabclicked {
+    background-color: white;
+    border-color: #0062cc;
+    border-width: 1px;
+    color: black;
+    border-bottom: none;
+    outline: 0;
+    width: 20%;
+    height: 50px;
+  }
+
+  .btntab {
+    background-color: #0062cc;
+    border-color: #0062cc;
+    color: white;
+    width: 20%;
+    height: 50px;
+  }
+  ::ng-deep .my-class .modal-dialog {
+     max-width: 70%;
+     width: 70%;
+}
+</style>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+<div class="modal-header">
+  <h5 class="modal-title">{{Title}}</h5>
+  <!-- <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span> -->
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" style="height: 500px;">
+  <button id="btnthongtinkh" type="button" class="btntab" (click)="ChangeTab(1)">Thông tin hội viên</button>
+  <button id="btnthemtudo" type="button" class="btntab" (click)="ChangeTab(2)">Thêm tủ đồ</button>
+  <button id="btnbaoluu" type="button" class="btntab" (click)="ChangeTab(3)">Bảo lưu gói tập</button>
+  <button id="btnchuyenphongtap" type="button" class="btntab" (click)="ChangeTab(4)">Chuyển phòng tập</button>
+  <button id="btnmuasanpham" type="button" class="btntab" (click)="ChangeTab(5)">Mua sản phẩm</button>
+
+
+  <div
+    style=" border-top: none; padding-top: 30px; padding-left: 30px; padding-right: 30px;">
+    <div [hidden]="!Isthongtinhoivien">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12">
+          <div class="panelCollapse">
+            <div>
+              <div class="collapse show">
+                <div class="row">
+                  <!--Cột trái-->
+                  <div class="col-xs-12 col-sm-12">
+                    <div class="form-group">
+                      Họ và tên: <b>{{HoTen}}</b>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-12">
+                    <div class="form-group">
+                      Số điện thoại: <b>{{Phone}}</b>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-12">
+                    <div class="form-group">Tình trạng tập: <b>{{TinhTrangTap}}</b>
+                    </div>
+                  </div>
+                  <br />
+                  <p><b>Thông tin gói tập:</b></p>
+                  <p-table #dt [value]="thongtins" styleClass="p-datatable-gridlines table table-bordered" [rows]="10"
+                    [paginator]="true" [responsive]="true" [rowHover]="true">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th  style="width:4%;">STT</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Ngày kết thúc</th>
+                        <th>Tên gói tập</th>
+                        <th>Giá trị<br /> gói tập</th>
+                        <th>Số tiền đã<br /> 
+                          thanh toán</th>
+                        <th>Số tiền<br /> còn lại</th>
+                        <th>Tình trạng<br /> gói tập</th>
+                        <th>Chức năng</th>
+                      </tr>
+
+                    </ng-template>
+                    <ng-template pTemplate="body" let-thongtin>
+                      <tr>
+                        <td>{{thongtin.STT}}</td>
+                        <td>{{thongtin.BatDau}}</td>
+                        <td>{{thongtin.KetThuc}}</td>
+                        <td>{{thongtin.TenGoi}}</td>
+                        <td>{{thongtin.GiaTriGoiTap}}</td>
+                        <td>{{thongtin.SoTienDaDong}}</td>
+                        <td>{{thongtin.SoTienConLai}}</td>
+                        <td>{{thongtin.TinhTrang}}</td>
+                        <td>
+                          <button  pButton pRipple type="button" (click)="InHoaDonGoiTap(thongtin)"  icon="pi pi-print" class="p-mr-2 p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="Chi tiết hợp đồng"></button>
+                          <button  pButton pRipple type="button" (click)="EditGoiTap(thongtin)"  class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-money-bill" data-toggle="tooltip" data-placement="right" title="Thêm mới thanh toán"></button>
+                          <button  pButton pRipple type="button" (click)="SuaHoaDon(thongtin)"  class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-pencil" data-toggle="tooltip" data-placement="right" title="Sửa Hóa đơn"></button>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div [hidden]="!Isthemtudo">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12">
+          <div class="panelCollapse">
+            <div class="collapse show">
+              <div class="row">
+                <!--Cột trái-->
+                <div class="col-xs-12 col-sm-2">
+                  <div class="form-group">
+                    <label class="label-text">Từ ngày<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <p-calendar [(ngModel)]="NgayBatDau" [locale]="en" maxlength="100"
+                      dateFormat="dd/mm/yy" [showIcon]="true" inputId="icon" (ngModelChange)="onBlurMethod($event)"  (onSelect)="moveDate($event)"
+                      [style]="{'width':'100%', 'height':'34px'}"></p-calendar>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                  <div class="form-group">
+                    <label class="label-text">Đến ngày<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <p-calendar [(ngModel)]="NgayKetThuc"  [locale]="en" maxlength="100" (ngModelChange)="onBlurMethod1($event)"  (onSelect)="moveDate1($event)"
+                      dateFormat="dd/mm/yy" [showIcon]="true" inputId="icon"
+                      [style]="{'width':'100%', 'height':'34px'}"></p-calendar>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                  <div class="form-group">
+                    <label class="label-text">Chọn tủ đồ<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <p-dropdown [options]="studos" [(ngModel)]="selectedTuDo" optionLabel="TenTuDo"
+                      [filter]="true" [style]="{'width':'100%', 'height':'34px'}" filterBy="TenTuDo"></p-dropdown>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                  <div class="form-group">
+                    <label class="label-text">Tiền thuê theo ngày<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" (keyup)="formatMoney($event)" (keypress)="onPressTien($event)"
+                      style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="GiaTien" />
+
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                  <div class="form-group">
+                    <label class="label-text">Hình thức thanh toán<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <select class="form-control" id="hinhthucthanhtoan" name="hinhthucthanhtoan"
+                          [(ngModel)]="HinhThucThanhToan">
+                          <option value="1">Tiền mặt</option>
+                          <option value="2">Chuyển khoản</option>
+                          <option value="3">Quẹt thẻ</option>
+                          <option value="4">Quẹt thẻ trả góp</option>
+                    </select>
+
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                  <div class="form-group">
+                    <label class="label-text">Ngày thuê tủ<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <p-calendar [(ngModel)]="NgayThueTu" [locale]="en" maxlength="100"
+                      dateFormat="dd/mm/yy" [showIcon]="true" inputId="icon"
+                      [style]="{'width':'100%', 'height':'34px'}"></p-calendar>
+
+                      <div class="form-group" style="text-align: right; margin-top: 20px;">
+                        <button type="button" class="btn btn-primary active" (click)="Save()">Ghi lại</button>
+                      </div>
+                  </div>
+                </div>
+                <p-table #dt [value]="tudos" styleClass="p-datatable-gridlines table table-bordered" [rows]="10"
+                  [paginator]="true" [responsive]="true" [rowHover]="true">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th>STT</th>
+                      <th>Từ ngày</th>
+                      <th>Đến ngày</th>
+                      <th>Số ngày</th>
+                      <th>Tiền thuê</th>
+                      <th>Tên tủ đồ</th>
+                      <th>Ngày thuê tủ</th>
+                      <th  style="width:18%;">Chức năng</th>
+                    </tr>
+
+                  </ng-template>
+                  <ng-template pTemplate="body" let-tudo>
+                    <tr>
+                      <td>{{tudo.STT}}</td>
+                      <td>{{tudo.TuNgay}}</td>
+                      <td>{{tudo.DenNgay}}</td>
+                      <td>{{tudo.SoLuongNgay}}</td>
+                      <td>{{tudo.ThanhTien}}</td>
+                      <td>{{tudo.TenTuDo}}</td>
+                      <td>{{tudo.NgayThueTu}}</td>
+                      <td>
+                        <!-- <button  pButton pRipple type="button" (click)="InHoaDonSanPham(sanpham)"  icon="pi pi-print" class="p-mr-2 p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="In hóa đơn"></button> -->
+                        <button  pButton pRipple type="button" (click)="EditThemMoiTuDo(tudo)"  class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-pencil" data-toggle="tooltip" data-placement="right" title="Sửa"></button>
+                        <button  pButton pRipple type="button" (click)="DeleteTuDo(tudo)"  icon="pi pi-trash" class="p-mr-2 p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="Xóa"></button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div [hidden]="!Isbaoluu">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12">
+          <div class="panelCollapse">
+            <div class="collapse show">
+              <div class="row">
+                <!--Cột trái-->
+                <div class="col-xs-12 col-sm-4">
+                  <div class="form-group">
+                    <label class="label-text">Từ ngày<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <p-calendar [(ngModel)]="NgayBatDauBaoLuu" [minDate]="minimumDate" [locale]="en" maxlength="100"
+                      dateFormat="dd/mm/yy" [showIcon]="true" inputId="icon"
+                      [style]="{'width':'100%', 'height':'34px'}"></p-calendar>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                  <div class="form-group">
+                    <label class="label-text">Đến ngày<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <p-calendar [(ngModel)]="NgayKetThucBaoLuu" [minDate]="minimumDate" [locale]="en" maxlength="100"
+                      dateFormat="dd/mm/yy" [showIcon]="true" inputId="icon"
+                      [style]="{'width':'100%', 'height':'34px'}"></p-calendar>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                  <div class="form-group" style="text-align: right;margin-top: 24px;">
+                    <button type="button" class="btn btn-primary active" (click)="Save()">Ghi lại</button>
+                  </div>
+                </div>
+                <p-table #dt [value]="baoluus" styleClass="p-datatable-gridlines table table-bordered" [rows]="10"
+                [paginator]="true" [responsive]="true" [rowHover]="true">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>STT</th>
+                    <th>Từ ngày</th>
+                    <th>Đến ngày</th>
+                    <th>Số ngày</th>
+                    <th  style="width:18%;">Chức năng</th>
+                  </tr>
+
+                </ng-template>
+                <ng-template pTemplate="body" let-baoluu>
+                  <tr>
+                    <td>{{baoluu.STT}}</td>
+                    <td>{{baoluu.TuNgay}}</td>
+                    <td>{{baoluu.DenNgay}}</td>
+                    <td>{{baoluu.SoLuongNgay}}</td>
+                    <td>
+                      <!-- <button  pButton pRipple type="button" (click)="InHoaDonSanPham(sanpham)"  icon="pi pi-print" class="p-mr-2 p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="In hóa đơn"></button> -->
+                      <button *ngIf="baoluu.flag ==0" pButton pRipple type="button" (click)="EditBaoLuu(baoluu)"  class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-pencil" data-toggle="tooltip" data-placement="right" title="Sửa"></button>
+                      <!-- <button  pButton pRipple type="button" (click)="DeleteTuDo(tudo)"  icon="pi pi-trash" class="p-mr-2 p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="Xóa"></button> -->
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div [hidden]="!Ischuyenphongtap">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12">
+          <div class="panelCollapse">
+            <div class="collapse show">
+              <div class="row">
+                <!--Cột trái-->
+                <div class="col-xs-12 col-sm-12">
+                  <div class="form-group">
+                    <label class="label-text">Câu lạc bộ từ<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                      [(ngModel)]="CauLacBoTu" disabled="true" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Câu lạc bộ đến<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <p-dropdown [options]="phongtaps" [(ngModel)]="selectedPhongTap" optionLabel="CauLacBo"
+                    [filter]="true" [style]="{'width':'100%', 'height':'34px'}"></p-dropdown>
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Số tiền chuyển<span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="number" class="p-inputtext-md" pInputText maxlength="9" [(ngModel)]="SoTienChuyen"
+                      name="SoTienChuyen" [style]="{'width':'100%', 'height':'34px'}">
+                  </div>
+                  <div class="form-group" style="text-align: right;">
+                    <button type="button" class="btn btn-primary active" (click)="Save()">Ghi lại</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div [hidden]="!IsMuaSanPham">
+      <p><b>Thông tin lịch sử mua sản phẩm:</b></p>
+
+            <button pButton type="button" (click)="EditThemMoiSanPham({Id:0})" label="Thêm mới"  style="margin-bottom: 10px;" class="p-button-raised p-button-rounded" icon="pi pi-plus"></button>
+            <button pButton type="button" (click)="DanhSachSanPhamDaMua()"  label="Danh sách sản phẩm đã mua"  style="margin-bottom: 10px;margin-left: 5px;" class="p-button-raised p-button-rounded" icon="pi pi-list"></button>
+
+
+      <p-table #dt [value]="sanphams" styleClass="p-datatable-gridlines table table-bordered" [rows]="10"
+        [paginator]="true" [responsive]="true" [rowHover]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:5%;">STT</th>
+            <th style="width:14%;">Mã đơn hàng</th>
+            <th style="width:18%;">Câu lạc bộ</th>
+            <th>Số tiền thanh toán</th>
+            <th>Hình thức thanh toán</th>
+            <th>Ngày mua</th>
+            <th  style="width:18%;">Chức năng</th>
+          </tr>
+
+        </ng-template>
+        <ng-template pTemplate="body" let-sanpham>
+          <tr>
+            <td>{{sanpham.STT}}</td>
+            <td>{{sanpham.MaDonHang}}</td>
+            <td>{{sanpham.TenCauLacBo}}</td>
+            <td>{{sanpham.txtSoTienThanhToan}} đ</td>
+            <td>{{sanpham.HinhThucThanhToan}}</td>
+            <td>{{sanpham.NgayMua}}</td>
+            <td>
+              <button  pButton pRipple type="button" (click)="InHoaDonSanPham(sanpham)"  icon="pi pi-print" class="p-mr-2 p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="In hóa đơn"></button>
+              <button  pButton pRipple type="button" (click)="EditThemMoiSanPham(sanpham)"  class="p-mr-2 p-button-raised p-button-rounded" icon="pi pi-pencil" data-toggle="tooltip" data-placement="right" title="Sửa"></button>
+              <button  pButton pRipple type="button" (click)="DeleteSanPham(sanpham)"  icon="pi pi-trash" class="p-mr-2 p-button-raised p-button-rounded" data-toggle="tooltip" data-placement="right" title="Xóa"></button>
+            </td>
+
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </div>
+
+
+  </div>

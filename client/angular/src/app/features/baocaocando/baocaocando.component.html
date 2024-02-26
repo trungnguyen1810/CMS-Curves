@@ -1,0 +1,49 @@
+<style>
+
+</style>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Báo cáo cân đo</h4>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng có lịch cân đo
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCaoHoiVienCoLichCanDo()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng trễ hẹn cân đo
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCaoHoiVienTreHenCanDo()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo biến động cân nặng
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCaoBienDongCanNang()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+
+
+  <div class="alert alert-primary" role="alert">
+    Báo cáo biến động các chỉ số cân đo
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="tungaybc1" name='tungaybc1' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="tungaybc2" name='tungaybc2' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCaoBienDongCacChiSo()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div>

@@ -1,0 +1,300 @@
+<style>
+  .btn_upload {
+    cursor: pointer;
+    display: inline-block;
+    /* overflow: hidden; */
+    position: relative;
+    color: #fff;
+    background-color: #2a72d4;
+    border: 1px solid #166b8a;
+    padding: 5px 10px;
+  }
+
+  .btn_upload:hover,
+  .btn_upload:focus {
+    background-color: #7ca9e6;
+  }
+
+  .yes {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px !important;
+  }
+
+  .btn_upload input {
+    cursor: pointer;
+    height: 100%;
+    position: absolute;
+    filter: alpha(opacity=1);
+    -moz-opacity: 0;
+    opacity: 0;
+  }
+
+  .it {
+    height: 100px;
+    margin-left: 10px;
+  }
+
+  .btn-rmv1,
+  .btn-rmv2,
+  .btn-rmv3,
+  .btn-rmv4,
+  .btn-rmv5 {
+    display: none;
+  }
+
+  .rmv {
+    cursor: pointer;
+    color: #fff;
+    border-radius: 30px;
+    border: 1px solid #fff;
+    display: inline-block;
+    background: rgba(255, 0, 0, 1);
+    margin: -5px -10px;
+  }
+
+  .rmv:hover {
+    background: rgba(255, 0, 0, 0.5);
+  }
+
+  .header {
+    display: none !important;
+  }
+</style>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div class="p-flex p-flex-column" style="flex: 1">
+      <div class="p-text-center">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+        <h4>{{message.summary}}</h4>
+        <p>{{message.detail}}</p>
+      </div>
+      <div class="p-grid p-fluid">
+        <div class="p-col-6">
+          <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+        </div>
+        <div class="p-col-6">
+          <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
+<div class="modal-header">
+
+  <h5 class="modal-title">{{Title}}</h5>
+  <!-- <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span> -->
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div class="panelCollapse">
+        <div>
+          <p-panel header="Thành phần cơ thể" [toggleable]="true">
+            <ng-template pTemplate="icons">
+              <!-- <button pButton class="p-panel-header-icon p-link" icon="pi pi-cog" (click)="menu.toggle($event)">
+              </button> -->
+              <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>
+            </ng-template>
+            <div class="collapse show">
+              <div class="row">
+                <!--Cột trái-->
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label class="col-form-label text-label">Chọn hội viên<span
+                        class="required">(*)</span></label>
+                      <p-dropdown [options]="hoiviens" [(ngModel)]="selectedHoiVien" name="selecthoivien" 
+                        optionLabel="ThongTinHoiVien" [style]="{'width':'100%'}" [filter]="true" [disabled]= "!password"
+                        (onChange)="changeHoiVien($event)"> </p-dropdown>
+
+
+                    <!-- <label class="label-text">Số điện thoại <span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" [disabled]= "!password" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="SoDienThoai"
+                       /> -->
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Cân nặng <span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                      [(ngModel)]="CanNang" />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="label-text">Chiều cao <span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                      [(ngModel)]="ChieuCao" />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="label-text">Lượng mỡ cơ thể
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                      [(ngModel)]="LuongMoCoThe" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Mật độ cơ
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                      [(ngModel)]="MatDoCo" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Mật độ xương
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                      [(ngModel)]="MatDoXuong" />
+                  </div>
+
+                </div>
+                <!-- cột phải-->
+                <div class="col-xs-12 col-sm-6">
+                  <div class="form-group">
+                    <label class="label-text">BMI <span style="color:red;margin-left:3px;">(*)</span>
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="BMI" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">DCI
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="DCI" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Tuổi sinh học
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                      [(ngModel)]="TuoiSinhHoc" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Lượng nước cơ thể
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                      [(ngModel)]="LuongNuocCoThe" />
+                  </div>
+                  <div class="form-group">
+                    <label class="label-text">Mỡ nội tạng
+                    </label>
+                    <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                      [(ngModel)]="MoNoiTang" />
+                  </div>
+
+                </div>
+
+
+
+              </div>
+            </div>
+          </p-panel>
+          <div class="nguoidung">
+            <p-panel header="Các số đo" [toggleable]="true">
+              <ng-template pTemplate="icons">
+                <!-- <button pButton class="p-panel-header-icon p-link" icon="pi pi-cog" (click)="menu.toggle($event)">
+              </button> -->
+                <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>
+              </ng-template>
+              <div class="collapse show">
+                <div class="row">
+                  <!--Cột trái-->
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label class="label-text">Ngực
+                      </label>
+                      <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                        [(ngModel)]="Nguc" />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="label-text">Eo
+                      </label>
+                      <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="Eo" />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="label-text">Bụng
+                      </label>
+                      <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                        [(ngModel)]="Bung" />
+                    </div>
+
+                  </div>
+                  <!-- cột phải-->
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label class="label-text">Mông
+                      </label>
+                      <input type="text" style="height: 34px;" maxlength="100" class="form-control"
+                        [(ngModel)]="Mong" />
+                    </div>
+                    <div class="form-group">
+                      <label class="label-text">Đùi
+                      </label>
+                      <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="Dui" />
+                    </div>
+                    <div class="form-group">
+                      <label class="label-text">Tay
+                      </label>
+                      <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="Tay" />
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </p-panel>
+          </div>
+          <div class="nguoidung">
+            <p-panel header="Thông tin hội viên" [toggleable]="true">
+              <ng-template pTemplate="icons">
+                <!-- <button pButton class="p-panel-header-icon p-link" icon="pi pi-cog" (click)="menu.toggle($event)">
+              </button> -->
+                <p-menu #menu id="config_menu" [model]="items" [popup]="true"></p-menu>
+              </ng-template>
+              <div class="collapse show">
+                <div class="row">
+                  <!--Cột trái-->
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label class="label-text">Ngày cân đo
+                      </label> <br />
+                      <p-calendar [(ngModel)]="NgayTap" name='ngaytap' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+                    </div>
+
+
+                    <div class="form-group">
+                      <label class="label-text">Thông tin facebook/zalo
+                      </label> <br />
+                      <span> {{Zalofb}}</span>
+                    </div>
+                  </div>
+                  <!-- cột phải-->
+                  <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                      <label class="label-text">Mục tiêu luyện tập
+                      </label> <br />
+                      <span> {{GhiChu}}</span>
+                    </div>
+                
+
+                  </div>
+                </div>
+              </div>
+            </p-panel>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary active" (click)="Save()">Ghi lại</button>
+  <button type="button" class="btn btn-primary active" (click)="activeModal.close()">Hủy bỏ</button>
+</div>

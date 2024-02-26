@@ -1,0 +1,154 @@
+<style>
+  
+    .btn_upload {
+      cursor: pointer;
+      display: inline-block;
+      /* overflow: hidden; */
+      position: relative;
+      color: #fff;
+      background-color: #2a72d4;
+      border: 1px solid #166b8a;
+      padding: 5px 10px;
+    }
+  
+    .btn_upload:hover,
+    .btn_upload:focus {
+      background-color: #7ca9e6;
+    }
+  
+    .yes {
+      display: flex;
+      align-items: flex-start;
+      margin-top: 10px !important;
+    }
+  
+    .btn_upload input {
+      cursor: pointer;
+      height: 100%;
+      position: absolute;
+      filter: alpha(opacity=1);
+      -moz-opacity: 0;
+      opacity: 0;
+    }
+  
+    .it {
+      height: 100px;
+      margin-left: 10px;
+    }
+  
+    .btn-rmv1,
+    .btn-rmv2,
+    .btn-rmv3,
+    .btn-rmv4,
+    .btn-rmv5 {
+      display: none;
+    }
+  
+    .rmv {
+      cursor: pointer;
+      color: #fff;
+      border-radius: 30px;
+      border: 1px solid #fff;
+      display: inline-block;
+      background: rgba(255, 0, 0, 1);
+      margin: -5px -10px;
+    }
+  
+    .rmv:hover {
+      background: rgba(255, 0, 0, 0.5);
+    }
+  </style>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+
+<div class="modal-header">
+  <h5 class="modal-title">{{Title}}</h5>
+  <!-- <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span> -->
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div class="panelCollapse">
+        <div>
+          <div class="collapse show">
+            <div class="row">
+              <!--Cột trái-->
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <label class="label-text">Tên cẩm nang <span style="color:red;margin-left:3px;">(*)</span>
+                  </label>
+                  <input type="text" style="height: 34px;" maxlength="100" class="form-control" [(ngModel)]="TenCamNang"
+                     />
+                </div>
+                                              
+              </div>
+              <!-- cột phải-->
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <div class="col-12 row">
+                    <div class="col-3">
+                        <label class="label-text">Hiển thị                    
+                          </label>
+                          <input type="checkbox" [(ngModel)]="HienThi" style="margin-left: 10px;"/> 
+                    </div>
+                   <div class="col-9">
+                    <div class="form-group">
+                      <label class="label-text">Ảnh đại diện <span style="color:red;margin-right:3px;">(*)</span> </label>
+                      <div class="col-9">
+                        <div class="yes">
+                          <span class="btn_upload">
+                            <input type="file" id="imag" title="" (change)="readURL($event);" class="input-img"
+                              accept=".png, .jpg, .jpeg" />
+                            Chọn
+                          </span>
+                          <img id="ImgPreview" *ngIf="showImg" style="border-radius: 10px;
+                          border-style: solid;
+                          border-color: #42afaa;                     
+                          margin-left: 20px;" [src]="imageSrc" class="preview1" height="100" width="120" />
+                          <input type="button" id="removeImage1" value="x" class="btn-rmv1" (click)="removeImg($event)" />
+                        </div>
+                      </div>
+                    </div> 
+                   </div>
+                  </div>
+                                  
+                </div> 
+                       
+              </div>
+              
+              <div class="col-xs-12 col-sm-12">
+                  <label class="label-text">Nội dung<span style="color:red;margin-left:3px;">(*)</span>
+                  </label>           
+          
+                  <ckeditor
+                  [(ngModel)]="NoiDung"
+                  [readonly]="false"  
+                  [config]="{filebrowserUploadUrl:'/api/admin/tintuc/ckeditor_upload'}"
+                  debounce="200">
+                </ckeditor>
+<!-- filebrowserImageBrowseUrl   :'/api/upload/getListImage' -->
+  <!-- (change)="onChange($event)"
+  (editorChange)="onEditorChange($event)" 
+  (ready)="onReady($event)"
+  (focus)="onFocus($event)"
+  (blur)="onBlur($event)"
+  (contentDom)="onContentDom($event)"
+  (fileUploadRequest)="onFileUploadRequest($event)"
+  (fileUploadResponse)="onFileUploadResponse($event)"
+  (paste)="onPaste($event)"
+  (drop)="onDrop($event)"   -->
+              </div>
+          
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary active" (click)="Save()">Ghi lại</button>
+  <button type="button" class="btn btn-primary active" (click)="activeModal.close()">Hủy bỏ</button>
+</div>

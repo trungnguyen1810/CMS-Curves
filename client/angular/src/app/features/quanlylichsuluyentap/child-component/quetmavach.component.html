@@ -1,0 +1,93 @@
+<style>
+    .required {
+        color: red;
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Quét mã thẻ hội viên</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <div class="col-md-12 row">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label text-label">Quét mã thẻ hội viên<span
+                            class="required">(*)</span></label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control quetmavach" autofocus name='mavach'
+       ngxBarCodePut
+       [(ngModel)]="MaVach"
+       maxlength="14"
+       [skipStart]="3"
+       [debounce]="500"
+       autocomplete="off"
+       (onDelete)="onDelete($event)"
+       (onDetected)="onDetected($event)">
+                        <!-- <input #myText class="form-control quetmavach" [(ngModel)]="MaVach" name='mavach' autofocus
+                            (paste)="onPaste($event)" (input)="onInput(myText.value)" id="mavach"> -->
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <span style="font-size: 18px;
+                    color: red;">{{ThongBao}}</span>
+            </div>
+            <div class="col-md-12" *ngIf="showhoivien" >
+                <div class="col-md-12 row">
+                    <label class="col-sm-6  text-label">Tên hội viên : </label>
+                    <div class="col-sm-6">
+                        {{hoivien?.HoVaTen}}
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <label class="col-sm-6  text-label">Số điện thoại : </label>
+                    <div class="col-sm-6">
+                        {{hoivien?.SoDienThoai}}
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <label class="col-sm-6  text-label">Số thẻ : </label>
+                    <div class="col-sm-6">
+                        {{hoivien?.SoThe}}
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <label class="col-sm-3  text-label">Ngày bắt đầu : </label>
+                    <div class="col-sm-3">
+                        {{hoivien?.NgayBatDau}}
+                    </div>
+                    <label class="col-sm-3  text-label">Ngày kết thúc : </label>
+                    <div class="col-sm-3">
+                        {{hoivien?.NgayKetThuc}}
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <label class="col-sm-3  text-label">Gói tập : </label>
+                    <div class="col-sm-3">
+                        {{hoivien?.TenGoiTap}}
+                    </div>
+                    <!-- <label class="col-sm-3  text-label">Tình trạng : </label>
+                    <div class="col-sm-3">
+                        {{hoivien?.txtTinhTrang}}
+                    </div> -->
+                </div>
+                <div class="col-md-12 row">
+                        <label class="col-sm-6  text-label">Ảnh đại diện : </label>
+                        <div class="col-sm-6">
+                                <img src="{{hoivien?.AnhDaiDien}}" style="height: 165px;
+                                width: 165px;" class="img-thumbnail">
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <!-- <button pButton type="button" (click)="saveData();" label="Ghi lại" class="p-button-raised p-button-rounded"
+        icon="pi pi-plus"></button> -->
+    <button pButton class="p-button-raised p-button-rounded" label="Đóng" (click)="activeModal.close()"></button>
+</div>

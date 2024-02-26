@@ -1,0 +1,46 @@
+<style>
+    .required{
+        color:red;
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Copy thực đơn tham khảo</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <div class="col-md-12 row">
+            <div class="col-md-5">                
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Từ ngày <span
+                        class="required">(*)</span></label>
+                    <div class="col-sm-7">
+                                            
+                        <p-calendar [(ngModel)]="NgayThamKhao1" name='ngaytap4' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+                    </div>
+                </div>
+            </div> 
+            <div class="col-md-2"> <i class="pi pi-arrow-right" style="font-size: 2.5rem;margin-left: 25px"></i>  </div>
+            
+            <div class="col-md-5">                
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Sang ngày <span
+                        class="required">(*)</span></label>
+                    <div class="col-sm-7">
+                                            
+                        <p-calendar [(ngModel)]="NgayThamKhao2"  name='ngaytap5' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </form>
+</div>
+<div class="modal-footer">
+    <button pButton type="button" (click)="saveData();" label="Xác nhận Copy" class="p-button-raised p-button-rounded"
+        icon="pi pi-copy"></button>
+    <button pButton class="p-button-raised p-button-rounded" label="Hủy bỏ" (click)="activeModal.close()"></button>
+</div>

@@ -1,0 +1,93 @@
+.pcoded .pcoded-navbar .pcoded-item>li {
+
+    border-bottom: solid #8f8a8abf 1px;
+}
+.pcoded .pcoded-navbar[navbar-theme="theme1"] .pcoded-item>li.pcoded-trigger>a {
+    background-color: #6d7b93 !important;
+
+}
+.pcoded .pcoded-navbar .pcoded-item>li>a {
+    display: block;
+    font-size: 13px;
+}
+.tinhtrang-hoatdong {
+    background-color: #c8e6c9;
+    color: #256029;
+    border-radius: 2px;
+    font-weight: 700;
+    font-size: 12px;
+}
+.tinhtrang-khonghoatdong {
+    background-color: #ffcdd2;
+    color: #c63737;
+    border-radius: 2px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.tinhtrang-chuahoatdong {
+    background-color: #e3e6c8;
+    color: #2e2560;
+    border-radius: 2px;
+    font-weight: 700;
+    font-size: 12px;
+}
+.pi-trash1{
+    color: #007bff;
+}
+.pi-pencils{
+    color: #f44336;
+}
+.pcoded .pcoded-container {
+    position: relative;
+    background: #f6f7fa;
+}
+td{
+    white-space: normal;
+    word-break: break-word;
+}
+.p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
+    font-size: 14px;
+}
+.p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th {
+    font-size: 14px;
+}
+.txtfiler{
+    width: 100%;
+    font-size: 14px;
+}
+.modal-title{
+    font-weight: 550;
+    /* color: #2196f3; */
+    color:#e049e2;
+    font-family: initial;
+}
+label{
+    color: #2196f3;
+    font-weight: 550;
+}
+.modal-header{
+    background: #e3e4e8;
+}
+.d-inline h4{
+    color: #d321f3 !important;
+
+}
+.p-datepicker table td {
+  padding: 0.25rem !important;
+}
+
+.p-datepicker table td > span {
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+}
+
+ .p-datepicker table {
+  font-size: 11pt !important;
+  margin: -0.153rem 0 !important;
+}
+
+ .p-datepicker .p-datepicker-header {
+  padding: 0.25rem !important;
+}
+

@@ -1,0 +1,105 @@
+<style>
+  .btn_upload {
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    color: #fff;
+    background-color: #2a72d4;
+    border: 1px solid #166b8a;
+    padding: 5px 10px;
+  }
+
+  .btn_upload:hover,
+  .btn_upload:focus {
+    background-color: #7ca9e6;
+  }
+
+  .yes {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px !important;
+  }
+
+  .btn_upload input {
+    cursor: pointer;
+    height: 100%;
+    position: absolute;
+    filter: alpha(opacity=1);
+    -moz-opacity: 0;
+    opacity: 0;
+  }
+
+  .it {
+    height: 100px;
+    margin-left: 10px;
+  }
+
+  .btn-rmv1,
+  .btn-rmv2,
+  .btn-rmv3,
+  .btn-rmv4,
+  .btn-rmv5 {
+    display: none;
+  }
+
+  .rmv {
+    cursor: pointer;
+    color: #fff;
+    border-radius: 30px;
+    border: 1px solid #fff;
+    display: inline-block;
+    background: rgba(255, 0, 0, 1);
+    margin: -5px -10px;
+  }
+
+  .rmv:hover {
+    background: rgba(255, 0, 0, 0.5);
+  }
+</style>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+
+<div class="modal-header">
+  <h5 class="modal-title">Phiếu hoàn ngày tập</h5>
+  <!-- <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span> -->
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div id="divInXacNhan">
+        <h2 style="text-align: center"><b>PHIẾU HOÀN NGÀY TẬP</b></h2>
+        <!-- <h3 style="text-align: center;font-weight:normal;"><i>ssssssssss</i>
+      </h3> -->
+        <p style="text-align: center">Ngày {{Day}} tháng {{Month}} năm {{Year}}</p>
+        <br />
+        <p>Họ và tên: <b>{{Ten}}</b></p>
+        <p>Số điện thoại: <b>{{SDT}}</b></p>
+        <p>Mã voucher: <b>{{Voucher}}</b></p>
+        <!-- <p>Số ngày hoàn: <b>{{SoNgay}}</b></p> -->
+        <p *ngIf="SoNgay != 0">Số ngày hoàn: <b>{{SoNgay}}</b></p>
+        <p *ngIf="SoTien != 0">Số tiền hoàn: <b>{{SoTien}} đ</b></p>
+        <p>Hạn sử dụng: <b>{{NgayHetHan}}</b></p>
+        <br />
+        <table style="text-align: center; width: 100%; border: none" border="0">
+          <tr>
+            <td style="border: none!important">
+              <p><b>NHÂN VIÊN</b></p>
+              <p><b><i>(Ký và ghi rõ họ tên)</i></b></p>
+            </td>
+            <td style="border: none!important">
+              <p><b>XÁC NHẬN CỦA KHÁCH HÀNG</b></p>
+              <p><b><i>(Ký và ghi rõ họ tên)</i></b></p>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary active" (click)="Save()">In xác nhận</button>
+  <button type="button" class="btn btn-primary active" (click)="activeModal.dismiss()">Hủy bỏ</button>
+</div>

@@ -1,0 +1,151 @@
+<style>
+    .required {
+        color: red;
+    }
+
+    .btn_upload {
+        cursor: pointer;
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+        color: #fff;
+        background-color: #2a72d4;
+        border: 1px solid #166b8a;
+        padding: 5px 10px;
+    }
+
+    .btn_upload:hover,
+    .btn_upload:focus {
+        background-color: #7ca9e6;
+    }
+
+    .yes {
+        display: flex;
+        align-items: flex-start;
+        margin-top: 10px !important;
+    }
+
+    .btn_upload input {
+        cursor: pointer;
+        height: 100%;
+        position: absolute;
+        filter: alpha(opacity=1);
+        -moz-opacity: 0;
+        opacity: 0;
+    }
+
+    .it {
+        height: 100px;
+        margin-left: 10px;
+    }
+
+    .btn-rmv1,
+    .btn-rmv2,
+    .btn-rmv3,
+    .btn-rmv4,
+    .btn-rmv5 {
+        display: none;
+    }
+
+    .rmv {
+        cursor: pointer;
+        color: #fff;
+        border-radius: 30px;
+        border: 1px solid #fff;
+        display: inline-block;
+        background: rgba(255, 0, 0, 1);
+        margin: -5px -10px;
+    }
+
+    .rmv:hover {
+        background: rgba(255, 0, 0, 0.5);
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{data.title}}</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <div class="col-md-12 row">
+            <div class="col-md-6">               
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label text-label">Ngày <span
+                        class="required">(*)</span></label>
+                    <div class="col-sm-7">
+                                            
+                        <p-calendar [(ngModel)]="NgayThamKhao" (onSelect)="onSelectNgay($event)" name='ngaytap1' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label text-label">Bữa ăn <span class="required"> (*)</span></label>
+                    <div class="col-sm-8">
+                        <p-dropdown [options]="buas" [(ngModel)]="selectedBua" name="bua" optionLabel="TenBuaAn"
+                            [style]="{'width':'186px'}">
+                        </p-dropdown>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="col-md-12 ">
+            <div class="row">
+                    <div class="col-md-6"> <label>Danh sách món ăn</label> <span style="font-size:13px;"> (click vào + để
+                            thêm vào lưới) </span></div>
+                    <div class="col-md-6">
+                            <p-dropdown [options]="danhsachmonans" [(ngModel)]="selectedMonAn" name="danhsachmonan" optionLabel="TenMonAn"
+                            [style]="{'width':'240px'}" [filter]="true">
+                        </p-dropdown>                            
+                            <button pButton type="button" (click)="ThemMon();" class="p-button-raised p-button-rounded"
+                        icon="pi pi-plus" style="margin-left: 20px;"></button>
+                    </div> 
+            </div>
+              
+            
+            <br><br>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên món ăn</th>
+                        <th scope="col">Đơn vị tính</th>
+                        <th scope="col">calo /đơn vị tính</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Tổng calo</th>
+                        <td scope="col"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of monans; let index = index">
+                        <th scope="row">{{index+1}}</th>
+                        <td>{{item.TenMonAn}}</td>
+                        <td>{{item.TenDonVi}}</td>
+                        <td>{{item.Calo}}</td>
+                        <td><input type="text" style="text-align:right;width: 100%;" name="name{{index}}"  [(ngModel)]="SoLuong[index].value" (keypress)=onPressSoLuong($event)  (keyup)="ChangeSoLuong(index)"> </td>
+                        <td>{{item.TongCalo}}</td>
+                        <td><button type="button" (click)="XoaMonAn(index);"  class="btn btn-sm btn-primary active xoamonan"> Xóa</button></td>
+                    </tr>
+                    <tr >
+                            <th scope="row">Tổng Calo</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{TongCong}}</td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button pButton type="button" (click)="saveData();" label="Ghi lại" class="p-button-raised p-button-rounded"
+        icon="pi pi-plus"></button>
+    <button pButton class="p-button-raised p-button-rounded" label="Hủy bỏ" (click)="activeModal.close()"></button>
+</div>

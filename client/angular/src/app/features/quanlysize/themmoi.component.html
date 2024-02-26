@@ -1,0 +1,34 @@
+<style>
+    .required {
+        color: red;
+    }
+
+
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{data.title}}</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <div class="col-md-12 row">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label text-label">Tên size <span
+                            class="required">(*)</span></label>
+                    <div class="col-sm-7" >
+                        <input type="text" class="p-inputtext-md" pInputText maxlength="200" [(ngModel)]="TenSize"
+                            name="tieude">
+                    </div>
+                </div>
+            
+            </div>            
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button pButton type="button" (click)="saveData();" label="Ghi lại" class="p-button-raised p-button-rounded"
+        icon="pi pi-plus"></button>
+    <button pButton class="p-button-raised p-button-rounded" label="Hủy bỏ" (click)="activeModal.close()"></button>
+</div>

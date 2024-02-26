@@ -1,0 +1,57 @@
+<style>
+
+
+</style>
+
+<div class="modal-header">
+  <h5 class="modal-title">Hóa đơn gói tập</h5>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      <div id="divInHoaDonMuaHang">
+        <h2 style="text-align: center"><b>Hóa đơn gói tập</b></h2>
+        <p style="text-align: center">Ngày {{Day}} tháng {{Month}} năm {{Year}}</p>
+        <p style="text-align: center">Gói tập: <b>{{OBJ.TenGoi}}</b></p>
+        <br />
+        <div style="margin-left:25px;">
+          <p>Họ và tên: <b>{{OBJ.HoVaTen}}</b></p>
+          <p>Số điện thoại: <b>{{OBJ.SoDienThoai}}</b></p>
+          <p>Giá trị gói tập: <b>{{datasave3.TienPhaiDong}} đồng</b></p>
+          <p>Số tiền đã đóng: <b>{{datasave3.SoTienTong}} đồng</b></p>
+          <p>Số tiền còn phải đóng: <b>{{datasave3.SoTienConLai}} đồng</b></p>
+          <p>Ngày hẹn trả: <b>{{datasave3.NgayHenTra}}</b></p> <br />
+          <p><b>Thông tin thanh toán: </b></p>
+          
+          <ul *ngFor="let data of datasave2; let i=index">
+            <li style = "list-style-type: circle;    margin-left: 50px;" *ngIf="data.Voucher==''">{{data.Ngay}} Thanh toán {{data.SoTienDong}}đ hình thức {{data.HinhThuc}}</li>
+            <li style = "list-style-type: circle;    margin-left: 50px;" *ngIf="data.Voucher!=''  && data.SoTienDong1 > 0">{{data.Ngay}} Thanh toán {{data.SoTienDong}}đ hình thức {{data.HinhThuc}} cùng với Voucher trị giá {{data.GiaTriVoucher}}đ</li>
+            <li style = "list-style-type: circle;    margin-left: 50px;" *ngIf="data.Voucher!=''  && data.SoTienDong1 == 0">{{data.Ngay}} Thanh toán Voucher trị giá {{data.GiaTriVoucher}}đ</li>
+          </ul>
+          <br /><br />
+          <p>Ghi chú : .....................................................................</p>
+        </div>
+        <br />
+        <table style="text-align: center; width: 100%; border: none" border="0">
+          <tr>
+            <td style="border: none!important">
+              <p><b>NHÂN VIÊN</b></p>
+              <p><b><i>(Ký và ghi rõ họ tên)</i></b></p>
+            </td>
+            <td style="border: none!important">
+              <p><b>XÁC NHẬN CỦA KHÁCH HÀNG</b></p>
+              <p><b><i>(Ký và ghi rõ họ tên)</i></b></p>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary active" (click)="Save()">In xác nhận</button>
+  <button type="button" class="btn btn-primary active" (click)="close()">Hủy bỏ</button>
+</div>

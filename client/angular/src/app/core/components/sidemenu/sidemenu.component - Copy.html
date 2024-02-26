@@ -1,0 +1,21 @@
+<nav class="pcoded-navbar" id="menu">
+    <li class="header-search" style="margin-top: -19px;margin-bottom: -15px;">
+        <div class="main-search morphsearch-search">
+            <div class="input-group">
+                <!-- <span class="input-group-addon search-close"><i class="feather icon-x"></i></span> -->
+                <input type="text" class="form-control" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="search">
+                <!-- <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span> -->
+            </div>
+        </div>
+    </li>
+    <div class="pcoded-inner-navbar main-menu">
+        <ul class="pcoded-item pcoded-left-item">
+            <li *ngFor="let item of menus | filter:searchText" >
+                <a routerLink="{{item.Url}}" routerLinkActive="active">             
+                    <span class="pcoded-micon"><i class="{{item.IconClass}}"></i></span>
+                    <span class="pcoded-mtext">{{item.Name}}</span>
+                </a>
+            </li>
+        </ul>    
+    </div>
+</nav>

@@ -1,0 +1,95 @@
+<style>
+
+</style>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Báo cáo tập luyện</h4>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng đang tập
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCaoKhachHangDangTap()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng chưa có gói tập
+    <hr>
+    <button class="btn btn-info active" (click)="BaoCaoKhachHangChuaCoGoiTap()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng hết hạn tập
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgay" name='tungaybc' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgay" name='denngaybc' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCaoKhachHangHetHan()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách khách hàng mới đăng ký gói tập
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgayDK" name='tungaybc1' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgayDK" name='denngaybc1' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCaoKhachHangMoiDangKyGoiTap()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+
+  </div>
+
+
+  <div class="alert alert-primary" role="alert">
+    Báo cáo xếp loại hội viên A B C D E
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgayTap" name='tungaythuetu' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgayTap" name='denngaythuetu' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCaoDanhSachHoiVienThamGiaTapLuyen()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div>
+
+  <div class="alert alert-primary" role="alert">
+    Báo cáo danh sách các hội viên còn hạn nhưng không đi tập
+    <hr>
+    <div class="col-md-12 row">
+        <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="TuNgayConHanKhongTap" name='tungaythuetu' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+            <p-calendar [(ngModel)]="DenNgayConHanKhongTap" name='denngaythuetu' dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+        </div>
+        <button class="btn btn-info active" (click)="BaoCaoDanhSachHoiVienConHanKhongTap()">Xuất báo cáo <span class="pi pi-file-excel"></span></button>
+
+    </div>
+  </div>

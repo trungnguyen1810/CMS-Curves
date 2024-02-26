@@ -1,0 +1,93 @@
+<style>
+    .required {
+        color: red;
+    }
+
+    .btn_upload {
+        cursor: pointer;
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+        color: #fff;
+        background-color: #2a72d4;
+        border: 1px solid #166b8a;
+        padding: 5px 10px;
+    }
+
+    .btn_upload:hover,
+    .btn_upload:focus {
+        background-color: #7ca9e6;
+    }
+
+    .yes {
+        display: flex;
+        align-items: flex-start;
+        margin-top: 10px !important;
+    }
+
+    .btn_upload input {
+        cursor: pointer;
+        height: 100%;
+        position: absolute;
+        filter: alpha(opacity=1);
+        -moz-opacity: 0;
+        opacity: 0;
+    }
+
+    .it {
+        height: 100px;
+        margin-left: 10px;
+    }
+
+    .btn-rmv1,
+    .btn-rmv2,
+    .btn-rmv3,
+    .btn-rmv4,
+    .btn-rmv5 {
+        display: none;
+    }
+
+    .rmv {
+        cursor: pointer;
+        color: #fff;
+        border-radius: 30px;
+        border: 1px solid #fff;
+        display: inline-block;
+        background: rgba(255, 0, 0, 1);
+        margin: -5px -10px;
+    }
+
+    .rmv:hover {
+        background: rgba(255, 0, 0, 0.5);
+    }
+</style>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{data.title}}</h4>
+    <span aria-hidden="true" ngbAutofocus style="cursor: pointer" (click)="activeModal.dismiss()">X</span>
+
+</div>
+<div class="modal-body">
+    <form>
+        <div class="col-md-12 row">
+            <div class="col-md-12 row">
+              <div class="col-md-12 row">
+                <div class="col-sm-4">        Từ ngày <span style="color:red;">(*) </span>
+                    <p-calendar [(ngModel)]="TuNgay" name="tungay123"  dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+                </div>
+                <div class="col-sm-4">        Đến ngày <span style="color:red;">(*) </span>
+                    <p-calendar [(ngModel)]="DenNgay"  name="denngay123"  dateFormat="dd-mm-yy" [showIcon]="true" inputId="icon"></p-calendar>
+
+                </div>
+                <div class="col-sm-4" >Câu lạc bộ <span style="color:red;">(*) </span>
+                  <p-multiSelect [options]="caulacbos" name="caulacbo123" [(ngModel)]="selectedCauLacBo" defaultLabel="Lựa chọn câu lạc bộ" optionLabel="TenCauLacBo" selectedItemsLabel="{0} câu lạc bộ"></p-multiSelect></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button pButton type="button" (click)="XuatBaoCao();" label="Xuất báo cáo" class="p-button-raised p-button-rounded"
+        icon="pi pi-file-excel"></button>
+    <button pButton class="p-button-raised p-button-rounded" label="Hủy bỏ" (click)="activeModal.close()"></button>
+</div>
